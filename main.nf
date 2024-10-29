@@ -9,8 +9,8 @@ include { humann; humann_regroup; humann_rename } from './processes/humann.nf'
 
 workflow {
     
-    read_pairs_ch = Channel
-        .fromFilePairs("$params.readsdir/$params.filepattern", size: 2)
+    read_ch = Channel
+        .fromPath("$params.readsdir/$params.filepattern")
 
     human_genome      = params.human_genome
     metaphlan_db      = params.metaphlan_db
@@ -18,7 +18,7 @@ workflow {
     humann_protein_db = params.humann_protein_db
     humann_utility_db = params.humann_utility_db
     
-    knead_out     = kneaddata(read_pairs_ch, human_genome)
+    knead_out     = kneaddata_paired(read_ch, human_genome)
     metaphlan_out = metaphlan(knead_out[0], knead_out[1], metaphlan_db)
     metaphlan_bzip = metaphlan_bzip(metaphlan_out[0], metaphlan_out[4])
     humann_out    = humann(metaphlan_out[0], metaphlan_out[1], metaphlan_out[2], humann_bowtie_db, humann_protein_db)

@@ -15,15 +15,11 @@ process metaphlan {
     path "${sample}.sam"
 
     script:
-    def forward = kneads[0]
-    def reverse = kneads[1]
-    def unf = unmatched[0]
-    def unr = unmatched[1]
 
     """
     cat $forward $reverse $unf $unr > ${sample}_grouped.fastq.gz
     
-    metaphlan ${sample}_grouped.fastq.gz ${sample}_profile.tsv \
+    metaphlan $kneads ${sample}_profile.tsv \
         --bowtie2out ${sample}_bowtie2.tsv \
         --samout ${sample}.sam \
         --input_type fastq \
