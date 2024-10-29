@@ -21,7 +21,7 @@ process kneaddata {
     """
     echo $sample
 
-    kneaddata --input $path \
+    kneaddata --input $reads \
               --reference-db $human_genome --output ./ \
               --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
               --trimmomatic /opt/conda/share/trimmomatic

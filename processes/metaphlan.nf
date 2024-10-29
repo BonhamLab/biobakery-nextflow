@@ -4,7 +4,6 @@ process metaphlan {
 
     input:
     tuple val(sample), path(kneads)
-    path unmatched
     path metaphlan_db
 
     output:
@@ -17,8 +16,6 @@ process metaphlan {
     script:
 
     """
-    cat $forward $reverse $unf $unr > ${sample}_grouped.fastq.gz
-    
     metaphlan $kneads ${sample}_profile.tsv \
         --bowtie2out ${sample}_bowtie2.tsv \
         --samout ${sample}.sam \

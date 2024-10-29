@@ -1,0 +1,8 @@
+readsdir: "test/single_end"
+outdir: "test/output/"
+human_genome: "/murray/databases/kneaddata/"
+metaphlan_db: "/murray/databases/metaphlan/"
+humann_bowtie_db: "/murray/databases/humann/chocophlan"
+humann_protein_db: "/murray/databases/humann/uniref"
+humann_utility_db: "/murray/databases/humann/utility_mapping"
+filepattern: "*.fastq.gz"
