@@ -29,4 +29,3 @@ process kneaddata {
     gzip *.fastq
     """  
 }
-
