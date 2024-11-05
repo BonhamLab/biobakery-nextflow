@@ -9,19 +9,35 @@ process metaphlan {
     output:
     val  sample                  , emit: sample
     path "${sample}_profile.tsv" , emit: profile
-    path "${sample}_grouped.fastq.gz"
+    // path "${sample}_grouped.fastq.gz"
     path "${sample}_bowtie2.tsv"
     path "${sample}.sam"
 
     script:
+    // Determine if there is one or four files based on the input file names
+    def kneads_files = kneads.size() == 1 ? "single" : "paired"
 
     """
-    metaphlan $kneads ${sample}_profile.tsv \
-        --bowtie2out ${sample}_bowtie2.tsv \
-        --samout ${sample}.sam \
-        --input_type fastq \
-        --nproc ${task.cpus} \
-        --bowtie2db $metaphlan_db
+    // For paired-end, concatenate files before running metaphlan
+    if [ "$kneads_files" == "paired" ]; then
+        cat ${kneads[0]} ${kneads[1]} ${kneads[2]} ${kneads[3]} > ${sample}_grouped.fastq.gz
+
+        metaphlan ${sample}_grouped.fastq.gz ${sample}_profile.tsv \
+            --bowtie2out ${sample}_bowtie2.tsv \
+            --samout ${sample}.sam \
+            --input_type fastq \
+            --nproc ${task.cpus} \
+            --bowtie2db $metaphlan_db
+
+    else
+
+        metaphlan ${kneads[0]}_grouped.fastq.gz ${sample}_profile.tsv \
+            --bowtie2out ${sample}_bowtie2.tsv \
+            --samout ${sample}.sam \
+            --input_type fastq \
+            --nproc ${task.cpus} \
+            --bowtie2db $metaphlan_db
+    fi
     """
 }
  
