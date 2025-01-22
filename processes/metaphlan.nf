@@ -4,7 +4,6 @@ process metaphlan {
 
     input:
         tuple val(sample), path(kneads)
-        path unmatched
         path metaphlan_db
 
     output:
