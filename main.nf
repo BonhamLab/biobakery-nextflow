@@ -16,6 +16,6 @@ workflow {
     metaphlan_db      = params.metaphlan_db
     
     knead_out     = kneaddata(read_pairs_ch, human_genome)
-    metaphlan_out = metaphlan(knead_out[0], knead_out[1], metaphlan_db)
+    metaphlan_out = metaphlan(knead_out[0], metaphlan_db)
     metaphlan_bzip = metaphlan_bzip(metaphlan_out[0], metaphlan_out[4])
 }
