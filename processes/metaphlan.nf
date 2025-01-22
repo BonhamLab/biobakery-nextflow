@@ -3,9 +3,8 @@ process metaphlan {
     publishDir "$params.outdir/metaphlan", pattern: "{*.tsv}"
 
     input:
-    tuple val(sample), path(kneads)
-    path unmatched
-    path metaphlan_db
+        tuple val(sample), path(kneads)
+        path metaphlan_db
 
     output:
     val  sample                  , emit: sample
@@ -15,13 +14,9 @@ process metaphlan {
     path "${sample}.sam"
 
     script:
-    def forward = kneads[0]
-    def reverse = kneads[1]
-    def unf = unmatched[0]
-    def unr = unmatched[1]
-
+    
     """
-    cat $forward $reverse $unf $unr > ${sample}_grouped.fastq.gz
+    cat $kneads > ${sample}_grouped.fastq.gz
     
     metaphlan ${sample}_grouped.fastq.gz ${sample}_profile.tsv \
         --bowtie2out ${sample}_bowtie2.tsv \
