@@ -1,6 +1,6 @@
 process metaphlan {
     tag "metaphlan on $sample"
-    publishDir "$params.outdir/metaphlan", pattern: "{*.tsv}"
+    publishDir "$params.outdir/metaphlan", pattern: "*.tsv"
 
     input:
     tuple val(sample), path(kneads)
@@ -10,21 +10,14 @@ process metaphlan {
     output:
     val  sample                  , emit: sample
     path "${sample}_profile.tsv" , emit: profile
-    path "${sample}_grouped.fastq.gz"
-    path "${sample}_bowtie2.tsv"
-    path "${sample}.sam"
+    path "${sample}_bowtie2.tsv" , emit: bowtie2
+    path "${sample}.sam"         , emit: sam
+
 
     script:
-    def forward = kneads[0]
-    def reverse = kneads[1]
-    def unf = unmatched[0]
-    def unr = unmatched[1]
-
     """
-    cat $forward $reverse $unf $unr > ${sample}_grouped.fastq.gz
-    
-    metaphlan ${sample}_grouped.fastq.gz ${sample}_profile.tsv \
-        --bowtie2out ${sample}_bowtie2.tsv \
+    metaphlan $kneads ${sample}_profile.tsv \
+        --mapout ${sample}_bowtie2.tsv \
         --samout ${sample}.sam \
         --input_type fastq \
         --nproc ${task.cpus} \
@@ -32,8 +25,8 @@ process metaphlan {
     """
 }
  
- process metaphlan_bzip {
-    tag "metaphlan_bzip on $sample"
+ process metaphlan_bam {
+    tag "metaphlan_bam on $sample"
     publishDir "$params.outdir/metaphlan"
     stageInMode "copy"
 
@@ -42,11 +35,13 @@ process metaphlan {
     path sam
 
     output:
-    val  sample                  , emit: sample
-    path "${sample}.sam.bz2"
+    val  sample          , emit: sample
+    path "${sample}.bam" , emit: bam
+
+    when:
 
     script:
     """
-    bzip2 -v $sam
+    samtools -bS $sam -o ${sample}.bam
     """
 }
