@@ -1,0 +1,8 @@
+readsdir: "/cluster/tufts/bonhamlab/shared/sequencing/fastq"
+outdir: "/cluster/tufts/bonhamlab/shared/sequencing/processed/"
+human_genome: "/cluster/tufts/bonhamlab/shared/databases/biobakery/kneaddata/"
+metaphlan_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/metaphlan/"
+humann_bowtie_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/humann/chocophlan"
+humann_protein_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/humann/uniref"
+humann_utility_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/humann/utility_mapping"
+filepattern: "*{_1,_2,}.fastq"
