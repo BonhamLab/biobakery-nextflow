@@ -46,9 +46,10 @@ process humann_regroup {
 
     output:
     val  sample , emit: sample
-    path "${sample}_ecs.tsv"
-    path "${sample}_kos.tsv"
-    path "${sample}_pfams.tsv"
+    path "${sample}_ecs.tsv", emit: ecs
+    path "${sample}_kos.tsv", emit: kos
+    path "${sample}_pfams.tsv", emit: pfams
+
 
     script:
 

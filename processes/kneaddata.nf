@@ -12,8 +12,8 @@ process kneaddata {
     path human_genome
 
     output:
-    tuple val(sample), path("${sample}_kneaddata_paired_{1,2}.fastq.gz")
-    path "${sample}_kneaddata_unmatched_{1,2}.fastq.gz"
+    val(sample), emit: sample
+    path("${sample}_kneaddata.fastq.gz"), emit: fastq
     path "${sample}_kneaddata*.fastq.gz" , optional:true , emit: others
     path "${sample}_kneaddata.log"                       , emit: log
 
@@ -22,7 +22,7 @@ process kneaddata {
     """
     echo $sample
 
-    kneaddata --input ${reads[0]} --input ${reads[1]} \
+    kneaddata --input $reads \
               --reference-db $human_genome --output ./ \
               --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
               --trimmomatic /opt/conda/share/trimmomatic

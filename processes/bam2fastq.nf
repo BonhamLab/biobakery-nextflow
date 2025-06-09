@@ -10,17 +10,13 @@ process bam2fastq {
     tuple val(sample), path(reads)
 
     output:
+    tuple val(sample), path("{sample}.fastq")
 
     shell:
     
     """
     echo $sample
 
-    kneaddata --input ${reads[0]} --input ${reads[1]} \
-              --reference-db $human_genome --output ./ \
-              --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
-              --trimmomatic /opt/conda/share/trimmomatic
-
-    gzip *.fastq
+    samtools fastq -@ {task.cpus} > {sample}.fastq
     """  
 }
