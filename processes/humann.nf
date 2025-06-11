@@ -17,9 +17,10 @@ process humann {
 
     output:
     val  sample                       , emit: sample
-    path "${sample}_genefamilies.tsv" , emit: genefamilies
-    path "${sample}_pathabundance.tsv"
-    path "${sample}_pathcoverage.tsv"
+    path "${sample}_2_genefamilies.tsv" , emit: genefamilies
+    path "${sample}_0.log"
+    path "${sample}_3_reactions.tsv"
+    path "${sample}_4_pathabundance.tsv"
 
     script:
 
@@ -53,10 +54,9 @@ process humann_regroup {
     script:
 
     """
-    humann_config --update database_folders utility_mapping `realpath ${params.humann_utility_db}`
-    humann_regroup_table --input $genefamilies --output ${sample}_ecs.tsv --groups uniref90_level4ec
-    humann_regroup_table --input $genefamilies --output ${sample}_kos.tsv --groups uniref90_ko
-    humann_regroup_table --input $genefamilies --output ${sample}_pfams.tsv --groups uniref90_pfam
+    humann_regroup_table --input $genefamilies --output ${sample}_ecs.tsv --custom ${params.humann_utility_db}/map_level4ec_uniclust90.txt.gz
+    humann_regroup_table --input $genefamilies --output ${sample}_kos.tsv --custom ${params.humann_utility_db}/map_ko_uniclust90.txt.gz
+    humann_regroup_table --input $genefamilies --output ${sample}_pfams.tsv --custom ${params.humann_utility_db}/map_pfam_uniref90.txt.gz
     """
 }   
 
@@ -79,9 +79,8 @@ process humann_rename {
     script:
 
     """
-    humann_config --update database_folders utility_mapping `realpath ${params.humann_utility_db}`
-    humann_rename_table --input $ecs   --output ${sample}_ecs_rename.tsv   --names ec
-    humann_rename_table --input $kos   --output ${sample}_kos_rename.tsv   --names kegg-orthology
-    humann_rename_table --input $pfams --output ${sample}_pfams_rename.tsv --names pfam
+    humann_rename_table --input $ecs   --output ${sample}_ecs_rename.tsv   --custom ${params.humann_utility_db}/map_level4ec_name.txt.gz
+    humann_rename_table --input $kos   --output ${sample}_kos_rename.tsv   --custom ${params.humann_utility_db}/map_ko_name.txt.gz
+    humann_rename_table --input $pfams --output ${sample}_pfams_rename.tsv --custom ${params.humann_utility_db}/map_pfam_name.txt.gz
     """
 }
