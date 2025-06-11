@@ -11,7 +11,7 @@ include { humann; humann_regroup; humann_rename } from './processes/humann.nf'
 workflow {
     
     read_ch = Channel
-        .fromPath("$params.readsdir/$params.filepattern")
+        .fromPath("${params.readsdir}/${params.filepattern}")
 
     
     bam_out       = bam2fastq(read_ch)
