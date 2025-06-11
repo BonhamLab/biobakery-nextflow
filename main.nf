@@ -11,8 +11,10 @@ include { humann; humann_regroup; humann_rename } from './processes/humann.nf'
 workflow {
     
     read_ch = Channel
-        .fromPath("${params.readsdir}/${params.filepattern}")
-
+        .fromFilePairs("${params.readsdir}/${params.filepattern}", size: 1)
+	
+ 
+    read_ch.view()
     
     bam_out       = bam2fastq(read_ch)
     knead_out     = kneaddata(bam_out)
