@@ -3,9 +3,8 @@ process metaphlan {
     publishDir "$params.outdir/metaphlan", pattern: "*.tsv"
 
     input:
-    tuple val(sample), path(kneads)
-    path unmatched
-    path metaphlan_db
+    val(sample)
+    path(kneads)
 
     output:
     val  sample                  , emit: sample
@@ -21,7 +20,9 @@ process metaphlan {
         --samout ${sample}.sam \
         --input_type fastq \
         --nproc ${task.cpus} \
-        --bowtie2db $metaphlan_db
+        --db_dir ${params.metaphlan_db} \
+        --index ${params.metaphlan_index} \
+        -t rel_ab_w_read_stats
     """
 }
  
@@ -42,6 +43,7 @@ process metaphlan {
 
     script:
     """
-    samtools -bS $sam -o ${sample}.bam
+    samtools -b $sam -o ${sample}.bam
+    rm $sam
     """
 }
