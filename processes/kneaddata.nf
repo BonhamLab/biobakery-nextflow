@@ -8,8 +8,8 @@ process kneaddata {
     maxRetries 3
 
     input:
-    tuple val(sample), path(reads)
-    path human_genome
+    val(sample)
+    path(reads)
 
     output:
     val(sample), emit: sample
