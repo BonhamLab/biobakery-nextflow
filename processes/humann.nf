@@ -26,10 +26,10 @@ process humann {
 
     """
     humann --input $catkneads --taxonomic-profile $profile --output ./ \
-        --threads ${task.cpus} --remove-temp-output \ 
+        --threads ${task.cpus} --remove-temp-output \
         --protein-database ${params.humann_protein_db} \
         --nucleotide-database ${params.humann_nucleotide_db} \
-        --utility-mapping ${params.humann_utility_db} \
+        --utility-database ${params.humann_utility_db} \
         --output-basename $sample 
     """
 }
