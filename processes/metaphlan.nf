@@ -15,7 +15,7 @@ process metaphlan {
 
     script:
     """
-    metaphlan $kneads ${sample}_profile.tsv \
+    metaphlan $kneads -o ${sample}_profile.tsv \
         --mapout ${sample}_bowtie2.tsv \
         --samout ${sample}.sam \
         --input_type fastq \
@@ -37,13 +37,13 @@ process metaphlan {
 
     output:
     val  sample          , emit: sample
-    path "${sample}.bam" , emit: bam
+    path "${sample}_markers.bam" , emit: bam
 
     when:
 
     script:
     """
-    samtools -b $sam -o ${sample}.bam
+    samtools view -bS $sam -o ${sample}_markers.bam
     rm $sam
     """
 }

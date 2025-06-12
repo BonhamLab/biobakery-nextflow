@@ -12,8 +12,8 @@ process humann {
 
     input:
     val  sample
-    path profile
     path catkneads
+    path profile
 
     output:
     val  sample                       , emit: sample
