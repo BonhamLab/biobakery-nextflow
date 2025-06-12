@@ -53,7 +53,7 @@ process humann_regroup {
 
     """
     humann_regroup_table --input $genefamilies --output ${sample}_ecs.tsv --custom ${params.humann_utility_db}/map_level4ec_uniclust90.txt.gz
-    humann_regroup_table --input $genefamilies --output ${sample}_kos.tsv --custom ${params.humann_utility_db}/map_ko_uniclust90.txt.gz
+    humann_regroup_table --input $genefamilies --output ${sample}_kos.tsv --custom ${params.humann_utility_db}/map_ko_uniref90.txt.gz
     humann_regroup_table --input $genefamilies --output ${sample}_pfams.tsv --custom ${params.humann_utility_db}/map_pfam_uniref90.txt.gz
     """
 }   
