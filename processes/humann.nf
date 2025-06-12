@@ -26,13 +26,11 @@ process humann {
 
     """
     humann --input $catkneads --taxonomic-profile $profile --output ./ \
-        --threads ${task.cpus} --remove-temp-output \ # add --search-mode uniref90 for 3.7
-        --output-basename $sample \
+        --threads ${task.cpus} --remove-temp-output \ 
         --protein-database ${params.humann_protein_db} \
         --nucleotide-database ${params.humann_nucleotide_db} \
         --utility-mapping ${params.humann_utility_db} \
-        --metaphlan-options="--index mpa_vOct22_CHOCOPhlAnSGB_202403 --bowtie2db ${params.metaphlan_db} -t rel_ab_with_read_stats"
-
+        --output-basename $sample 
     """
 }
 

@@ -1,6 +1,7 @@
 process metaphlan {
     tag "metaphlan on $sample"
-    publishDir "$params.outdir/metaphlan", pattern: "*.tsv"
+    // publishDir "$params.outdir/metaphlan", pattern: "*.tsv" // once fix for sam compression is found
+    publishDir "$params.outdir/metaphlan" // keeps sam file
 
     input:
     val(sample)
@@ -43,7 +44,12 @@ process metaphlan {
 
     script:
     """
-    samtools view -bS $sam -o ${sample}_markers.bam
+    # Duplicate headers in output - skipping header validation
+    samtools view -bS --no-PG ${sam} -o ${sample}_markers.bam
+ 
+    # Alternative approach: strip and rebuild header
+    # samtools view -S ${sam} | samtools view -b -o ${sample}_markers.bam
+    
     rm $sam
     """
 }
