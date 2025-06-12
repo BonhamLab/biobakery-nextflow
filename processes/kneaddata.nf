@@ -4,8 +4,8 @@ process kneaddata {
     time { workflow.profile == 'standard' ? null : time * task.attempt }
     memory { workflow.profile == 'standard' ? null : memory * task.attempt }
 
-    errorStrategy 'retry'
-    maxRetries 3
+    //errorStrategy 'retry'
+    //maxRetries 3
 
     input:
     tuple val(sample), path(reads)
@@ -21,11 +21,11 @@ process kneaddata {
     """
     echo $sample
 
-    kneaddata --input $reads \
+    kneaddata --unpaired $reads \
               --reference-db ${params.human_genome} --output ./ \
               --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
-              --trimmomatic /opt/conda/share/trimmomatic
+              --trimmomatic /cluster/tufts/bonhamlab/shared/conda-envs/metaphlan_v4.2/.CondaPkg/.pixi/envs/default/share/trimmomatic
 
-    gzip *.fastq
+    gzip ${sample}_kneaddata*.fastq
     """  
 }
