@@ -3,11 +3,11 @@
 process humann {
     tag "humann on $sample"
     publishDir "$params.outdir/humann/main"
-    memory { workflow.profile == 'standard' ? null : memory * task.attempt }
-    cpus { workflow.profile == 'standard' ? null : cpus * task.attempt }
+    // memory { workflow.profile == 'standard' ? null : memory * task.attempt }
+    // cpus { workflow.profile == 'standard' ? null : cpus * task.attempt }
 
-    errorStrategy { task.exitStatus in 134..140 ? 'retry' : 'terminate' }
-    maxRetries 3
+    // errorStrategy { task.exitStatus in 134..140 ? 'retry' : 'terminate' }
+    // maxRetries 3
 
 
     input:
