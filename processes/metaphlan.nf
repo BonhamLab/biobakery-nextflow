@@ -15,13 +15,23 @@ process metaphlan {
 
 
     script:
+    // metphlan4 changed metaphlan db variable from bowtie2db to db_dir
+    // also changed from bowtie2out to mapout
+    if (params.metaphaln_ver == 'metaphlan4') {
+    db_arg = 'db_dir'
+    out_arg = 'mapout'}
+    else (params.metaphaln_ver == 'metaphlan3.1.0'){
+    db_arg = 'bowtie2db'
+    out_arg = 'bowtie2out'
+    }
+    
     """
     metaphlan $kneads -o ${sample}_profile.tsv \
-        --mapout ${sample}_bowtie2.tsv \
+        --${out_arg} ${sample}_bowtie2.tsv \
         --samout ${sample}.sam \
         --input_type fastq \
         --nproc ${task.cpus} \
-        --db_dir ${params.metaphlan_db} \
+        --${dbarg} ${params.metaphlan_db} \
         --index ${params.metaphlan_index} \
         -t rel_ab_w_read_stats
     """
