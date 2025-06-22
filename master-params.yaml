@@ -1,0 +1,52 @@
+### Data type
+# paired end data
+paired_end: "True"
+
+### Metaphlan version
+# metaphlan3.1.0 params
+metaphlan_ver : "metaphlan3.1.0"
+# metaphlan4 params
+metaphlan_ver : "metaphlan4"
+
+# humann3.7 params
+humann_ver : "humann3.7"
+# humann4alpha params
+humann_ver : "humann4_alpha"
+
+
+
+### Computing environment
+# local params (will need to fill out yourself based on the location of files on your personal computer)
+
+# readsdir: 
+# outdir: 
+# human_genome: 
+# metaphlan_db: 
+# metaphlan_index: 
+# humann_nucleotide_db: 
+# humann_protein_db: 
+# humann_utility_db: 
+
+# Tufts HPC params
+readsdir: "/cluster/tufts/bonhamlab/shared/sequencing/bam"
+outdir: "/cluster/tufts/bonhamlab/shared/sequencing/processed"
+human_genome: "/cluster/tufts/bonhamlab/shared/databases/biobakery/kneaddata"
+metaphlan_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/metaphlan"
+metaphlan_index: "mpa_vOct22_CHOCOPhlAnSGB_202403"
+humann_nucleotide_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/humann/chocophlan"
+humann_protein_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/humann/uniref"
+humann_utility_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/humann/utility_mapping"
+
+
+# AWS params
+readsdir: "s3://vkc-nextflow/rawfastq/"
+outdir: "s3://vkc-nextflow/output/"
+human_genome: "s3://biobakery-databases/kneaddata_databases/"
+metaphlan_db: "s3://biobakery-databases/metaphlan_databases/"
+humann_bowtie_db: "s3://biobakery-databases/humann_databases/chocophlan"
+humann_protein_db: "s3://biobakery-databases/humann_databases/uniref"
+humann_utility_db: "s3://biobakery-databases/humann_databases/utility_mapping"
+
+
+# Global params (same regardless of computer environment)
+filepattern: "*.bam" # need to adjust if bam or fastq
