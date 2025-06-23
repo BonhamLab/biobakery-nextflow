@@ -2,14 +2,14 @@
 
 by Kevin Bonham, PhD 
 
-bioBakery
+[bioBakery](https://github.com/biobakery): software, documentation, and tutorials for microbial community profiling (created and mantained by the Huttenhower lab)
 
-- `KneadData`: a data quality-control pipeline that removes host genomic data within our metagenomic samples. Particularly, this pipeline uses a database containing a reference human genome so that all human DNA is removed from the samples. Link to more information here: (https://huttenhower.sph.harvard.edu/kneaddata/).
-- `MetaPhlAn`
-- `HUMAnN`
+- [`KneadData`](https://github.com/biobakery/kneaddata): a data quality-control pipeline that removes host genomic data within our metagenomic samples. Particularly, this pipeline uses a database containing a reference human genome so that all human DNA is removed from the samples. Link to more information here: (https://huttenhower.sph.harvard.edu/kneaddata/).
+- [`MetaPhlAn`](https://github.com/biobakery/MetaPhlAn): a computational tool for species-level microbial profiling (bacteria, archaea, eukaryotes, and viruses) from metagenomic shotgun sequencing data. Link to more information here:(https://huttenhower.sph.harvard.edu/metaphlan)
+- [`HUMAnN`](https://github.com/biobakery/humann): a pipeline for efficiently and accurately profiling the presence/absence and abundance of microbial pathways in a community from metagenomic or metatranscriptomic sequencing data (typically millions of short DNA/RNA reads). This process, referred to as functional profiling, aims to describe the metabolic potential of a microbial community and its members. Link to more information here:(https://huttenhower.sph.harvard.edu/humann)
 
 ## Setup
-Instructions for setting up a local environment to run the pipeline can be found on Danielle's notebook [here](LINK TO BE ADDED). 
+Instructions for setting up a local environment to run the pipeline can be found on Danielle's notebook [here](https://github.com/BonhamLab/daniellepinto/blob/main/PeriodicMeetings/2025-06-17.md#danielles-personal-notes). 
 
 Computing environments on the Tufts HPC and AWS should already be set-up with apptainer environments.
 
@@ -47,12 +47,18 @@ Several databases must be installed to run the pipeline.
 
 ### Kneaddata
 - A database containing a reference human genome so that unwanted human DNA can be removed from our metagenomic samples.
+    - The `Homo_sapiens_hg39_T2T_Bowtie2_v0.1` bowtie2 database can be downloaded from [here](https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.1.tar.gz).
+        - This version of the database can be used for all analyses and there shouldn't be a big need to upgrade the database (unless we have an updated human genome!)
+- Other reference databases can be added as well if other types of data want to be removed (eg. human transcriptome, mouse genome, etc.)
 
 ### MetaPhlAn
-- `mpa_vOct22_CHOCOPhlAnSGB_202403` is the most recent MetaPhlAn database that is compatible with the versions of HUMAnN we are using
+- `mpa_vOct22_CHOCOPhlAnSGB_202403` is the most recent MetaPhlAn database that is compatible with the versions of HUMAnN we are using.
+    - It can be downloaded from [here](http://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/).
 - Note: there is a more up-to-date version (released in January 2025) that we will probably eventually want to shift to once HUMAnN is able to support it.
 
 ### HUMAnN
+- Looks like there is only version available
+    - Database can be downloaded [here](http://cmprod1.cibio.unitn.it/databases/HUMAnN/).
 
 
 ## Information on software versions
@@ -80,7 +86,7 @@ The `master-params.yaml` file defines all input parameters that you may want to 
 - `outdir`: path to directory where processed results will be saved
 - `human_genome`: path to directory that contains human reference database used during Kneaddata 
 - `metaphlan_db`: path to directory that contains metaphlan databases
-- `metaphlan_index`: 
+- `metaphlan_index`: database version (database must exist within `metaphlan_db`)
 - `humann_nucleotide_db`: 
 - `humann_protein_db`: 
 - `humann_utility_db`: 
