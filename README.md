@@ -57,8 +57,7 @@ Several databases must be installed to run the pipeline.
 - Note: there is a more up-to-date version (released in January 2025) that we will probably eventually want to shift to once HUMAnN is able to support it.
 
 ### HUMAnN
-- Looks like there is only version available
-    - Database can be downloaded [here](http://cmprod1.cibio.unitn.it/databases/HUMAnN/).
+- Database can be downloaded [here](http://cmprod1.cibio.unitn.it/databases/HUMAnN/).
 
 
 ## Information on software versions
@@ -87,7 +86,7 @@ The `master-params.yaml` file defines all input parameters that you may want to 
 - `human_genome`: path to directory that contains human reference database used during Kneaddata 
 - `metaphlan_db`: path to directory that contains metaphlan databases
 - `metaphlan_index`: database version (database must exist within `metaphlan_db`)
-- `humann_nucleotide_db`: 
-- `humann_protein_db`: 
+- `humann_nucleotide_db`: path to directory containing chocophlan database
+- `humann_protein_db`: path to directory containing UniRef database
 - `humann_utility_db`: 
 - `filepattern`: regex describing samples should be named (relative to the input raw data)
