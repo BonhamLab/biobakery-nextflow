@@ -1,6 +1,9 @@
 ### Data type
+data_type: "fastq"
+data_type: "bam"
 # paired end data
 paired_end: "True"
+
 
 ### Metaphlan version
 # metaphlan3.1.0 params

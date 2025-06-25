@@ -8,7 +8,7 @@ by Kevin Bonham, PhD
 - [`MetaPhlAn`](https://github.com/biobakery/MetaPhlAn): a computational tool for species-level microbial profiling (bacteria, archaea, eukaryotes, and viruses) from metagenomic shotgun sequencing data. Link to more information here:(https://huttenhower.sph.harvard.edu/metaphlan)
 - [`HUMAnN`](https://github.com/biobakery/humann): a pipeline for efficiently and accurately profiling the presence/absence and abundance of microbial pathways in a community from metagenomic or metatranscriptomic sequencing data (typically millions of short DNA/RNA reads). This process, referred to as functional profiling, aims to describe the metabolic potential of a microbial community and its members. Link to more information here:(https://huttenhower.sph.harvard.edu/humann)
 
-## Setup
+## Environment setup
 Instructions for setting up a local environment to run the pipeline can be found on Danielle's notebook [here](https://github.com/BonhamLab/daniellepinto/blob/main/PeriodicMeetings/2025-06-17.md#danielles-personal-notes). 
 
 Computing environments on the Tufts HPC and AWS should already be set-up with apptainer environments.
@@ -23,27 +23,28 @@ Based on the profiles described in `nextflow.config`, we can run the pipeline wi
 
 [NEED TO DOUBLE CHECK THIS PART]
 ### Running locally
-`nextflow main.nf --local` 
+`nextflow run main.nf -profile local -params-file params.yaml` 
 
 ### Running on the HPC
-TO DO: Still need to figure out the exact nextflow syntax
-
 Jobs on the Tufts HPC can be run in two different ways:
 - **Batch**: the job will be sent to the queue and it will be completed based on how many resources you have requested, current cluster load, and fairshare (have you recently used the cluster) 
-    - `nextflow main.nf --tufts_hpc --batch` 
 
 - **Preempt**: this allows you to run your job preemptively using free nodes from another lab that paid for these compute resources. However, if they are already running a job, your job will be killed and you'll have to resubmit it.
 
-    - `nextflow main.nf --tufts_hpc --preempt` 
+With how the HPC environment is currently defined in `nextflow.config`, jobs will first be submitted to the batch queue. If there are not any available resources, it will be processed preemptively. 
 
+
+- `nextflow run main.nf -profile tufts_hpc -params-file params.yaml` 
 
 ### Running on AWS
-`nextflow main.nf --amazon` 
+`nextflow main.nf -profile amazon -params-file params.yaml` 
 
 > Kevin may want to add additional comments here about different ways to run the pipeline
 
+> Note: We can also process samples on the MIT `engaging` cluster, but that should probably not be used without permission
+
 ## Databases
-Several databases must be installed to run the pipeline. 
+Several databases must be installed to run this pipeline. 
 
 ### Kneaddata
 - A database containing a reference human genome so that unwanted human DNA can be removed from our metagenomic samples.
@@ -75,13 +76,14 @@ This pipeline supports the following versions of MetaPhlAn and HUMAnN:
 There are some raw fastq files in `test/` which can be processed through the pipeline
 
 ## Using the `template-params.yaml` file
-The `template-params.yaml` file defines all input parameters that you may want to use to run the Nextflow pipeline. The file should not be used directly to run the pipeline. Rather, the user should select the params they need from the file based on how they would like to use the pipeline (software versions of MetaPhlAn or HUMAnN, computing environment, databases, etc. ), and paste these into a separate yaml file. This second yaml file can be used to run the Nextflow pipeline. 
+The `template-params.yaml` file defines all input parameters that you may want to use to run the Nextflow pipeline. The file should **not** be used directly to run the pipeline. Rather, the user should select the params they need from the file based on how they would like to use the pipeline (software versions of MetaPhlAn or HUMAnN, computing environment, databases, input data etc. ), and paste these into a separate yaml file. This second yaml file can be used to run the Nextflow pipeline. 
 
 ### Overview of parameters in `template-params.yaml`
+- `data_type`: type of input data (either `fastq` or `bam`)
 - `paired_end`: True or False, given the type of input data
 - `metaphlan_ver`: MetaPhlAn software version (either `metaphlan3.1.0` or `metaphlan4`)
 - `humann_ver`: HUMAnN3 software version (either `humann3.7` or `humann4_alpha`)
-- `readsdir`: path to directory that contains raw data (bam files)
+- `readsdir`: path to directory that contains raw data 
 - `outdir`: path to directory where processed results will be saved
 - `human_genome`: path to directory that contains human reference database used during Kneaddata 
 - `metaphlan_db`: path to directory that contains metaphlan databases
