@@ -74,10 +74,10 @@ This pipeline supports the following versions of MetaPhlAn and HUMAnN:
 ## Testing the pipeline
 There are some raw fastq files in `test/` which can be processed through the pipeline
 
-## Using the `master-params.yaml` file
-The `master-params.yaml` file defines all input parameters that you may want to use to run the Nextflow pipeline. The file should not be used directly to run the pipeline. Rather, the user should select the params they need from the file based on how they would like to use the pipeline (software versions of MetaPhlAn or HUMAnN, computing environment, databases, etc. ), and paste these into a separate yaml file. This second yaml file can be used to run the Nextflow pipeline. 
+## Using the `template-params.yaml` file
+The `template-params.yaml` file defines all input parameters that you may want to use to run the Nextflow pipeline. The file should not be used directly to run the pipeline. Rather, the user should select the params they need from the file based on how they would like to use the pipeline (software versions of MetaPhlAn or HUMAnN, computing environment, databases, etc. ), and paste these into a separate yaml file. This second yaml file can be used to run the Nextflow pipeline. 
 
-### Overview of parameters in `master-params.yaml`
+### Overview of parameters in `template-params.yaml`
 - `paired_end`: True or False, given the type of input data
 - `metaphlan_ver`: MetaPhlAn software version (either `metaphlan3.1.0` or `metaphlan4`)
 - `humann_ver`: HUMAnN3 software version (either `humann3.7` or `humann4_alpha`)
