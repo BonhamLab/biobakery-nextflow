@@ -26,8 +26,13 @@ Based on the profiles described in `nextflow.config`, we can run the pipeline wi
 `nextflow run main.nf -profile local -params-file params.yaml` 
 
 ### Running on the HPC
+
 Jobs on the Tufts HPC can be run in two different ways:
-- **Batch**: the job will be sent to the queue and it will be completed based on how many resources you have requested, current cluster load, and fairshare (have you recently used the cluster) 
+
+- **Batch**: the job will be sent to the queue
+  and it will be completed based on how many resources you have requested,
+  current cluster load,
+  and fairshare (have you recently used the cluster) 
 
 - **Preempt**: this allows you to run your job preemptively using free nodes from another lab that paid for these compute resources. However, if they are already running a job, your job will be killed and you'll have to resubmit it.
 
