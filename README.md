@@ -4,7 +4,12 @@ by Kevin Bonham, PhD
 
 [bioBakery](https://github.com/biobakery): software, documentation, and tutorials for microbial community profiling (created and mantained by the Huttenhower lab)
 
-- [`KneadData`](https://github.com/biobakery/kneaddata): a data quality-control pipeline that removes host genomic data within our metagenomic samples. Particularly, this pipeline uses a database containing a reference human genome so that all human DNA is removed from the samples. Link to more information here: (https://huttenhower.sph.harvard.edu/kneaddata/).
+- [`KneadData`](https://github.com/biobakery/kneaddata): 
+  a data quality-control pipeline that trims low quality reads
+  and removes host genomic data within our metagenomic samples.
+  Particularly, this pipeline uses a database containing a reference human genome
+  so that all human DNA is removed from the samples.
+  Link to more information here: (https://huttenhower.sph.harvard.edu/kneaddata/).
 - [`MetaPhlAn`](https://github.com/biobakery/MetaPhlAn): a computational tool for species-level microbial profiling (bacteria, archaea, eukaryotes, and viruses) from metagenomic shotgun sequencing data. Link to more information here:(https://huttenhower.sph.harvard.edu/metaphlan)
 - [`HUMAnN`](https://github.com/biobakery/humann): a pipeline for efficiently and accurately profiling the presence/absence and abundance of microbial pathways in a community from metagenomic or metatranscriptomic sequencing data (typically millions of short DNA/RNA reads). This process, referred to as functional profiling, aims to describe the metabolic potential of a microbial community and its members. Link to more information here:(https://huttenhower.sph.harvard.edu/humann)
 
