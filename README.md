@@ -11,7 +11,7 @@ by Kevin Bonham, PhD
 ## Environment setup
 Instructions for setting up a local environment to run the pipeline can be found on Danielle's notebook [here](https://github.com/BonhamLab/daniellepinto/blob/main/PeriodicMeetings/2025-06-17.md#danielles-personal-notes). 
 
-Computing environments on the Tufts HPC and AWS should already be set-up with apptainer environments.
+Computing environments on the Tufts HPC and AWS should already be set-up with container-based (docker, apptainer) or conda environments.
 
 ## Running the pipeline
 This nextflow pipeline can be run on three different types of machines: 
