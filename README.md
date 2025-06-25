@@ -48,7 +48,8 @@ Jobs on the Tufts HPC can be run in two different ways:
   current cluster load,
   and fairshare (have you recently used the cluster) 
 
-- **Preempt**: this allows you to run your job preemptively using free nodes from another lab that paid for these compute resources. However, if they are already running a job, your job will be killed and you'll have to resubmit it.
+- **Preempt**: this allows you to run your job using free nodes from another lab that paid for these compute resources.
+  However, if they attempt to queue a job, your job will be preempted and killed, so you'll have to resubmit it.
 
 With how the HPC environment is currently defined in `nextflow.config`, jobs will first be submitted to the batch queue. If there are not any available resources, it will be processed preemptively. 
 
