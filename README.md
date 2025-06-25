@@ -21,7 +21,7 @@ This nextflow pipeline can be run on three different types of machines:
 
 Based on the profiles described in `nextflow.config`, we can run the pipeline with the following Nextflow commands:
 
-[NEED TO DOUBLE CHECK THIS PART]
+
 ### Running locally
 `nextflow run main.nf -profile local -params-file params.yaml` 
 
@@ -54,7 +54,7 @@ Several databases must be installed to run this pipeline.
 
 ### MetaPhlAn
 - `mpa_vOct22_CHOCOPhlAnSGB_202403` is the most recent MetaPhlAn database that is compatible with the versions of HUMAnN we are using.
-    - It can be downloaded from [here](http://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/).
+    - It can be found/downloaded manually from [here](http://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/). The easiest way to download is by running `metaphlan --install #any_other_args`
 - Note: there is a more up-to-date version (released in January 2025) that we will probably eventually want to shift to once HUMAnN is able to support it.
 
 ### HUMAnN
@@ -79,10 +79,12 @@ There are some raw fastq files in `test/` which can be processed through the pip
 The `template-params.yaml` file defines all input parameters that you may want to use to run the Nextflow pipeline. The file should **not** be used directly to run the pipeline. Rather, the user should select the params they need from the file based on how they would like to use the pipeline (software versions of MetaPhlAn or HUMAnN, computing environment, databases, input data etc. ), and paste these into a separate yaml file. This second yaml file can be used to run the Nextflow pipeline. 
 
 ### Overview of parameters in `template-params.yaml`
-- `data_type`: type of input data (either `fastq` or `bam`)
+- `input_data_type`: type of input data (either `fastq` or `bam`)
 - `paired_end`: True or False, given the type of input data
-- `metaphlan_ver`: MetaPhlAn software version (either `metaphlan3.1.0` or `metaphlan4`)
-- `humann_ver`: HUMAnN3 software version (either `humann3.7` or `humann4_alpha`)
+- `filepattern`: regex describing sample naming convention (relative to the input data type)
+
+- `metaphlan_version`: MetaPhlAn software version (either `metaphlan_v3` or `metaphlan_v4`)
+- `humann_version`: HUMAnN3 software version (either `humann_v37` or `humann_v4a`)
 - `readsdir`: path to directory that contains raw data 
 - `outdir`: path to directory where processed results will be saved
 - `human_genome`: path to directory that contains human reference database used during Kneaddata 
@@ -90,5 +92,4 @@ The `template-params.yaml` file defines all input parameters that you may want t
 - `metaphlan_index`: database version (database must exist within `metaphlan_db`)
 - `humann_nucleotide_db`: path to directory containing chocophlan database
 - `humann_protein_db`: path to directory containing UniRef database
-- `humann_utility_db`: 
-- `filepattern`: regex describing samples should be named (relative to the input raw data)
+- `humann_utility_db`: path to directory containing databases that have conversions between different protein annotations (eg UniRef90 to KO or EC), and names for all of the different annotations that have them
