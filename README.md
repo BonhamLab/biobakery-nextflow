@@ -51,7 +51,8 @@ Jobs on the Tufts HPC can be run in two different ways:
 - **Preempt**: this allows you to run your job using free nodes from another lab that paid for these compute resources.
   However, if they attempt to queue a job, your job will be preempted and killed, so you'll have to resubmit it.
 
-With how the HPC environment is currently defined in `nextflow.config`, jobs will first be submitted to the batch queue. If there are not any available resources, it will be processed preemptively. 
+With how the HPC environment is currently defined in `nextflow.config`,
+jobs will first be submitted to the `batch` or `preempt` queue, whichever is available first.
 
 
 - `nextflow run main.nf -profile tufts_hpc -params-file params.yaml` 
