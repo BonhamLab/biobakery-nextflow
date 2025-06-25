@@ -10,8 +10,17 @@ by Kevin Bonham, PhD
   Particularly, this pipeline uses a database containing a reference human genome
   so that all human DNA is removed from the samples.
   Link to more information here: (https://huttenhower.sph.harvard.edu/kneaddata/).
-- [`MetaPhlAn`](https://github.com/biobakery/MetaPhlAn): a computational tool for species-level microbial profiling (bacteria, archaea, eukaryotes, and viruses) from metagenomic shotgun sequencing data. Link to more information here:(https://huttenhower.sph.harvard.edu/metaphlan)
-- [`HUMAnN`](https://github.com/biobakery/humann): a pipeline for efficiently and accurately profiling the presence/absence and abundance of microbial pathways in a community from metagenomic or metatranscriptomic sequencing data (typically millions of short DNA/RNA reads). This process, referred to as functional profiling, aims to describe the metabolic potential of a microbial community and its members. Link to more information here:(https://huttenhower.sph.harvard.edu/humann)
+- [`MetaPhlAn`](https://github.com/biobakery/MetaPhlAn): 
+  a computational tool for species-level microbial profiling (bacteria, archaea, eukaryotes, and viruses)
+  from metagenomic shotgun sequencing data.
+  Link to more information here:(https://huttenhower.sph.harvard.edu/metaphlan)
+- [`HUMAnN`](https://github.com/biobakery/humann): 
+  a pipeline for efficiently and accurately profiling the presence/absence and abundance of microbial pathways
+  in a community from metagenomic or metatranscriptomic sequencing data
+  (typically millions of short DNA/RNA reads).
+  This process, referred to as functional profiling,
+  aims to describe the metabolic potential of a microbial community and its members.
+  Link to more information here:(https://huttenhower.sph.harvard.edu/humann)
 
 ## Environment setup
 Instructions for setting up a local environment to run the pipeline can be found on Danielle's notebook [here](https://github.com/BonhamLab/daniellepinto/blob/main/PeriodicMeetings/2025-06-17.md#danielles-personal-notes). 
