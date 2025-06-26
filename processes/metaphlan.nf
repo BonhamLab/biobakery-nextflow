@@ -1,39 +1,44 @@
 process metaphlan {
     tag "metaphlan on $sample"
-    publishDir "$params.outdir/metaphlan", pattern: "{*.tsv}"
+    // publishDir "$params.outdir/metaphlan", pattern: "*.tsv" // once fix for sam compression is found
+    publishDir "$params.outdir/metaphlan" // keeps sam file
 
     input:
-    tuple val(sample), path(kneads)
-    path unmatched
-    path metaphlan_db
+    val(sample)
+    path(kneads)
 
     output:
     val  sample                  , emit: sample
     path "${sample}_profile.tsv" , emit: profile
-    path "${sample}_grouped.fastq.gz"
-    path "${sample}_bowtie2.tsv"
-    path "${sample}.sam"
+    path "${sample}_bowtie2.tsv" , emit: bowtie2
+    path "${sample}.sam"         , emit: sam
+
 
     script:
-    def forward = kneads[0]
-    def reverse = kneads[1]
-    def unf = unmatched[0]
-    def unr = unmatched[1]
-
-    """
-    cat $forward $reverse $unf $unr > ${sample}_grouped.fastq.gz
+    // metphlan4 changed metaphlan db variable from bowtie2db to db_dir
+    // also changed from bowtie2out to mapout
+    if (params.metaphaln_ver == 'metaphlan4') {
+    db_arg = 'db_dir'
+    out_arg = 'mapout'}
+    else (params.metaphaln_ver == 'metaphlan3.1.0'){
+    db_arg = 'bowtie2db'
+    out_arg = 'bowtie2out'
+    }
     
-    metaphlan ${sample}_grouped.fastq.gz ${sample}_profile.tsv \
-        --bowtie2out ${sample}_bowtie2.tsv \
+    """
+    metaphlan $kneads -o ${sample}_profile.tsv \
+        --${out_arg} ${sample}_bowtie2.tsv \
         --samout ${sample}.sam \
         --input_type fastq \
         --nproc ${task.cpus} \
-        --bowtie2db $metaphlan_db
+        --${dbarg} ${params.metaphlan_db} \
+        --index ${params.metaphlan_index} \
+        -t rel_ab_w_read_stats
     """
 }
  
- process metaphlan_bzip {
-    tag "metaphlan_bzip on $sample"
+ process metaphlan_bam {
+    tag "metaphlan_bam on $sample"
     publishDir "$params.outdir/metaphlan"
     stageInMode "copy"
 
@@ -42,11 +47,19 @@ process metaphlan {
     path sam
 
     output:
-    val  sample                  , emit: sample
-    path "${sample}.sam.bz2"
+    val  sample          , emit: sample
+    path "${sample}_markers.bam" , emit: bam
+
+    when:
 
     script:
     """
-    bzip2 -v $sam
+    # Duplicate headers in output - skipping header validation
+    samtools view -bS --no-PG ${sam} -o ${sample}_markers.bam
+ 
+    # Alternative approach: strip and rebuild header
+    # samtools view -S ${sam} | samtools view -b -o ${sample}_markers.bam
+    
+    rm $sam
     """
 }
