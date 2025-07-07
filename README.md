@@ -10,8 +10,17 @@ by Kevin Bonham, PhD
   Particularly, this pipeline uses a database containing a reference human genome
   so that all human DNA is removed from the samples.
   Link to more information here: (https://huttenhower.sph.harvard.edu/kneaddata/).
-- [`MetaPhlAn`](https://github.com/biobakery/MetaPhlAn): a computational tool for species-level microbial profiling (bacteria, archaea, eukaryotes, and viruses) from metagenomic shotgun sequencing data. Link to more information here:(https://huttenhower.sph.harvard.edu/metaphlan)
-- [`HUMAnN`](https://github.com/biobakery/humann): a pipeline for efficiently and accurately profiling the presence/absence and abundance of microbial pathways in a community from metagenomic or metatranscriptomic sequencing data (typically millions of short DNA/RNA reads). This process, referred to as functional profiling, aims to describe the metabolic potential of a microbial community and its members. Link to more information here:(https://huttenhower.sph.harvard.edu/humann)
+- [`MetaPhlAn`](https://github.com/biobakery/MetaPhlAn): 
+  a computational tool for species-level microbial profiling (bacteria, archaea, eukaryotes, and viruses)
+  from metagenomic shotgun sequencing data.
+  Link to more information here:(https://huttenhower.sph.harvard.edu/metaphlan)
+- [`HUMAnN`](https://github.com/biobakery/humann): 
+  a pipeline for efficiently and accurately profiling the presence/absence and abundance of microbial pathways
+  in a community from metagenomic or metatranscriptomic sequencing data
+  (typically millions of short DNA/RNA reads).
+  This process, referred to as functional profiling,
+  aims to describe the metabolic potential of a microbial community and its members.
+  Link to more information here:(https://huttenhower.sph.harvard.edu/humann)
 
 ## Environment setup
 Instructions for setting up a local environment to run the pipeline can be found on Danielle's notebook [here](https://github.com/BonhamLab/daniellepinto/blob/main/PeriodicMeetings/2025-06-17.md#danielles-personal-notes). 
@@ -39,9 +48,11 @@ Jobs on the Tufts HPC can be run in two different ways:
   current cluster load,
   and fairshare (have you recently used the cluster) 
 
-- **Preempt**: this allows you to run your job preemptively using free nodes from another lab that paid for these compute resources. However, if they are already running a job, your job will be killed and you'll have to resubmit it.
+- **Preempt**: this allows you to run your job using free nodes from another lab that paid for these compute resources.
+  However, if they attempt to queue a job, your job will be preempted and killed, so you'll have to resubmit it.
 
-With how the HPC environment is currently defined in `nextflow.config`, jobs will first be submitted to the batch queue. If there are not any available resources, it will be processed preemptively. 
+With how the HPC environment is currently defined in `nextflow.config`,
+jobs will first be submitted to the `batch` or `preempt` queue, whichever is available first.
 
 
 - `nextflow run main.nf -profile tufts_hpc -params-file params.yaml` 
