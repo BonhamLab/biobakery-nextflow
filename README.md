@@ -63,12 +63,17 @@ Several databases must be installed to run this pipeline.
 - Other reference databases can be added as well if other types of data want to be removed (eg. human transcriptome, mouse genome, etc.)
 
 ### MetaPhlAn
-- `mpa_vOct22_CHOCOPhlAnSGB_202403` is the most recent MetaPhlAn database that is compatible with the versions of HUMAnN we are using.
+- `mpa_vOct22_CHOCOPhlAnSGB_202403` is the most recent MetaPhlAn database that is compatible with HUMAnN v4.
     - It can be found/downloaded manually from [here](http://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/). The easiest way to download is by running `metaphlan --install #any_other_args`
 - Note: there is a more up-to-date version (released in January 2025) that we will probably eventually want to shift to once HUMAnN is able to support it.
+- `mpa_vOct22_CHOCOPhlAnSGB_202212` should be used if running HUMAnN v3.
 
 ### HUMAnN
-- Database can be downloaded [here](http://cmprod1.cibio.unitn.it/databases/HUMAnN/).
+
+- Use the command `humann_databases --download` to download the database that you desire 
+    - for example: `humann_databases --download chocophlan full ~/biobakery_databases/chocophlan`
+    - Each humann software version has its own matching database. As long as you are using the correct software version to run `humann_database --download`, you will get a compatible database. 
+- All humann database can be found [here](http://cmprod1.cibio.unitn.it/databases/HUMAnN/).
 
 
 ## Information on software versions
