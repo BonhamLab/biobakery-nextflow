@@ -1,6 +1,6 @@
 process kneaddata {
     tag "kneaddata $sample"
-    publishDir "$params.outdir/kneaddata"
+    publishDir "$params.outdir/kneaddata", mode: 'link'
     time { workflow.profile == 'standard' ? null : time * task.attempt }
     memory { workflow.profile == 'standard' ? null : memory * task.attempt }
 

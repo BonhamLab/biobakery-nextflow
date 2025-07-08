@@ -2,7 +2,7 @@
 
 process humann {
     tag "humann on $sample"
-    publishDir "$params.outdir/humann/main"
+    publishDir "$params.outdir/humann/main", mode: 'link'
     // memory { workflow.profile == 'standard' ? null : memory * task.attempt }
     // cpus { workflow.profile == 'standard' ? null : cpus * task.attempt }
 

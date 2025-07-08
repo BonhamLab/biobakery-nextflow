@@ -1,7 +1,7 @@
 process metaphlan {
     tag "metaphlan on $sample"
     // publishDir "$params.outdir/metaphlan", pattern: "*.tsv" // once fix for sam compression is found
-    publishDir "$params.outdir/metaphlan" // keeps sam file
+    publishDir "$params.outdir/metaphlan", mode: 'link' // keeps sam file
 
     input:
     val(sample)
