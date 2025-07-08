@@ -1,6 +1,6 @@
 # Nextflow pipeline for running the bioBakery
 
-by Kevin Bonham, PhD 
+by Kevin Bonham, PhD and Danielle Pinto
 
 [bioBakery](https://github.com/biobakery): software, documentation, and tutorials for microbial community profiling (created and mantained by the Huttenhower lab)
 
@@ -37,7 +37,7 @@ Based on the profiles described in `nextflow.config`, we can run the pipeline wi
 
 
 ### Running locally
-`nextflow run main.nf -profile local -params-file params.yaml` 
+`nextflow run main.nf --profile local -params-file template-params.yaml` 
 
 ### Running on the HPC
 
@@ -55,12 +55,10 @@ With how the HPC environment is currently defined in `nextflow.config`,
 jobs will first be submitted to the `batch` or `preempt` queue, whichever is available first.
 
 
-- `nextflow run main.nf -profile tufts_hpc -params-file params.yaml` 
+- `nextflow run main.nf --profile tufts_hpc -params-file template-params.yaml` 
 
 ### Running on AWS
-`nextflow main.nf -profile amazon -params-file params.yaml` 
-
-> Kevin may want to add additional comments here about different ways to run the pipeline
+`nextflow main.nf --profile amazon -params-file template-params.yaml` 
 
 > Note: We can also process samples on the MIT `engaging` cluster, but that should probably not be used without permission
 
@@ -116,6 +114,5 @@ The `template-params.yaml` file defines all input parameters that you may want t
 - `human_genome`: path to directory that contains human reference database used during Kneaddata 
 - `metaphlan_db`: path to directory that contains metaphlan databases
 - `metaphlan_index`: database version (database must exist within `metaphlan_db`)
-- `humann_nucleotide_db`: path to directory containing chocophlan database
-- `humann_protein_db`: path to directory containing UniRef database
-- `humann_utility_db`: path to directory containing databases that have conversions between different protein annotations (eg UniRef90 to KO or EC), and names for all of the different annotations that have them
+- `humann_db`: path to directory containing humann databases
+
