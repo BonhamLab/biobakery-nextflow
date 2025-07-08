@@ -2,10 +2,10 @@
 
 nextflow.enable.dsl=2
 
-include { bam2fastq } from './processes/bam2fastq.nf'
-include { kneaddata } from './processes/kneaddata.nf'
-include { metaphlan; metaphlan_bam } from './processes/metaphlan.nf'
-include { humann; humann_regroup; humann_rename } from './processes/humann.nf'
+include { bam2fastq } from '${projectDir}/processes/bam2fastq.nf'
+include { kneaddata } from '${projectDir}/processes/kneaddata.nf'
+include { metaphlan; metaphlan_bam } from '${projectDir}/processes/metaphlan.nf'
+include { humann; humann_regroup; humann_rename } from '${projectDir}/processes/humann.nf'
 
 
 workflow {
