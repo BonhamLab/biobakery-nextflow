@@ -14,7 +14,7 @@ workflow {
         .fromFilePairs("${params.readsdir}/${params.filepattern}")
     
     knead_out     = kneaddata(read_ch)
-    metaphlan_out = metaphlan(knead_out.sample, knead_out.paired, kneadout.unpaired)
+    metaphlan_out = metaphlan(knead_out.sample, knead_out.paired, knead_out.unpaired)
     humann_out    = humann(metaphlan_out.sample, metaphlan_out.concatenated, metaphlan_out.profile)
     regroup_out   = humann_regroup(humann_out.sample, humann_out.genefamilies)
     humann_rename(regroup_out)
