@@ -1,56 +1,52 @@
 ### Data type
-input_data_type: "bam"
+# input_data_type: "bam"
 input_data_type: "fastq"
 # paired end data
 paired_end: "True"
 
-filepattern: "*.bam" # need to adjust if bam or fastq
+# filepattern: "*.bam" # need to adjust if bam or fastq
 # filepattern: "*.fastq" 
-# filepattern: "*.fastq.gz" 
+filepattern: "*.fastq.gz" 
 
 
 ### Metaphlan version
 # metaphlan3.1.0 params
-metaphlan_version : "metaphlan_v3"
+# metaphlan_version : "metaphlan_v3"
 # metaphlan4 params
 metaphlan_version : "metaphlan_v4"
 
 # humann3.7 params
-humann_version : "humann_v37"
+# humann_version : "humann_v37"
 # humann4alpha params
 humann_version : "humann_v4a"
-
 
 
 ### Computing environment
 # local params (will need to fill out yourself based on the location of files on your personal computer)
 
-# readsdir: 
-# outdir: 
-# human_genome: 
-# metaphlan_db: 
-# metaphlan_index: 
-# humann_nucleotide_db: 
-# humann_protein_db: 
-# humann_utility_db: 
+readsdir: "/Users/pintorson/Documents/tufts_bonham/biobakery-nextflow/test/rawfastq"
+outdir: "/Users/pintorson/Documents/tufts_bonham/biobakery-nextflow/test/results"
+human_genome: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/kneaddata"
+trimmomatic_path: "/Users/pintorson/miniconda3/envs/metaphlan_env/bin"
+metaphlan_db: "/Users/pintorson/miniconda3/envs/metaphlan_env/lib/python3.10/site-packages/metaphlan/metaphlan_databases"
+metaphlan_index: "mpa_vJan25_CHOCOPhlAnSGB_202503"
+humann_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/humann"
+
+
 
 # Tufts HPC params
-readsdir: "/cluster/tufts/bonhamlab/shared/sequencing/bam"
-outdir: "/cluster/tufts/bonhamlab/shared/sequencing/processed"
-human_genome: "/cluster/tufts/bonhamlab/shared/databases/biobakery/kneaddata"
-metaphlan_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/metaphlan"
-metaphlan_index: "mpa_vOct22_CHOCOPhlAnSGB_202403"
-humann_nucleotide_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/humann/chocophlan"
-humann_protein_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/humann/uniref"
-humann_utility_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/humann/utility_mapping"
+# readsdir: "/cluster/tufts/bonhamlab/shared/sequencing/bam"
+# outdir: "/cluster/tufts/bonhamlab/shared/sequencing/processed"
+# human_genome: "/cluster/tufts/bonhamlab/shared/databases/biobakery/kneaddata"
+# metaphlan_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/metaphlan"
+# metaphlan_index: "mpa_vOct22_CHOCOPhlAnSGB_202403"
+# humann_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/humann/chocophlan"
 
 
 # AWS params
-readsdir: "s3://vkc-nextflow/rawfastq/"
-outdir: "s3://vkc-nextflow/output/"
-human_genome: "s3://biobakery-databases/kneaddata_databases/"
-metaphlan_db: "s3://biobakery-databases/metaphlan_databases/"
-humann_bowtie_db: "s3://biobakery-databases/humann_databases/chocophlan"
-humann_protein_db: "s3://biobakery-databases/humann_databases/uniref"
-humann_utility_db: "s3://biobakery-databases/humann_databases/utility_mapping"
+# readsdir: "s3://vkc-nextflow/rawfastq/"
+# outdir: "s3://vkc-nextflow/output/"
+# human_genome: "s3://biobakery-databases/kneaddata_databases/"
+# metaphlan_db: "s3://biobakery-databases/metaphlan_databases/"
+# humann_db: "s3://biobakery-databases/humann_databases/chocophlan"
 
