@@ -12,7 +12,8 @@ process kneaddata {
 
     output:
     val(sample), emit: sample
-    path("${sample}_kneaddata.fastq.gz"), emit: fastq
+    path("${sample}_kneaddata_paired_{1,2}.fastq.gz"), emit: paired
+    path("${sample}_kneaddata_unmatched_{1,2}.fastq.gz"), emit: unpaired
     path "${sample}_kneaddata*.fastq.gz" , optional:true , emit: others
     path "${sample}_kneaddata.log"                       , emit: log
 
