@@ -11,15 +11,9 @@ include { humann; humann_regroup; humann_rename } from './processes/humann.nf'
 workflow {
     
     read_ch = Channel
-        .fromPath("${params.readsdir}/${params.filepattern}")
-        .map { file -> 
-            def sample = file.baseName  // ERR3405856.bam -> ERR3405856
-            return tuple(sample, file)
-        }
+        .fromFilePairs("${params.readsdir}/${params.filepattern}")
     
-    
-    bam_out       = bam2fastq(read_ch)
-    knead_out     = kneaddata(bam_out)
+    knead_out     = kneaddata(read_ch)
     metaphlan_out = metaphlan(knead_out.sample, knead_out.fastq)
     // metaphlan_bam = metaphlan_bam(metaphlan_out.sample, metaphlan_out.sam) // not working because of headers
     humann_out    = humann(metaphlan_out.sample, knead_out.fastq, metaphlan_out.profile)

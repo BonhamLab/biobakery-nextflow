@@ -21,7 +21,7 @@ process kneaddata {
     """
     echo $sample
 
-    kneaddata --unpaired $reads \
+    kneaddata -i1 ${reads[0]} -i2 ${reads[1]} \
               --reference-db ${params.human_genome} --output ./ \
               --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
               --trimmomatic /cluster/tufts/bonhamlab/shared/conda-envs/metaphlan_v4.2/.CondaPkg/.pixi/envs/default/share/trimmomatic
