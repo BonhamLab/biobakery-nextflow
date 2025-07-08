@@ -23,9 +23,8 @@ process kneaddata {
 
     kneaddata --unpaired $reads \
               --reference-db ${params.human_genome} --output ./ \
-              --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
-              --trimmomatic /cluster/tufts/bonhamlab/shared/conda-envs/metaphlan_v4.2/.CondaPkg/.pixi/envs/default/share/trimmomatic
-
+              --processes ${task.cpus} --output-prefix ${sample}_kneaddata
+        
     gzip ${sample}_kneaddata*.fastq
     """  
 }
