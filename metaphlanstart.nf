@@ -8,16 +8,16 @@ include { humann; humann_regroup; humann_rename } from './processes/humann.nf'
 workflow {
     
     read_ch = Channel
-        .fromPath("${params.readsdir}/*_1.fastq.gz")
+        .fromPath("${params.readsdir}/*_R1.fastq.gz")
         .map { file ->
-            def sample = file.baseName.replaceAll(/_1$/, '')
+            def sample = file.baseName.replaceAll(/_R1$/, '')
             def paired = [
-                "${params.readsdir}/${sample}_1.fastq.gz",
-                "${params.readsdir}/${sample}_2.fastq.gz"
+                "${params.readsdir}/${sample}_R1.fastq.gz",
+                "${params.readsdir}/${sample}_R2.fastq.gz"
             ]
             def unpaired = [
-                "${params.readsdir}/${sample}_1_unpaired.fastq.gz", 
-                "${params.readsdir}/${sample}_2_unpaired.fastq.gz"
+                "${params.readsdir}/${sample}_R1_unpaired.fastq.gz", 
+                "${params.readsdir}/${sample}_R2_unpaired.fastq.gz"
             ]
             return [sample, paired, unpaired]
         }
