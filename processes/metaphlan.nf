@@ -19,7 +19,7 @@ process metaphlan {
     script:
     // metphlan4 changed metaphlan db variable from bowtie2db to db_dir
     // also changed from bowtie2out to mapout
-    if (params.metaphaln_ver == 'metaphlan4') {
+    if (params.metaphlan_ver == 'metaphlan4') {
         db_arg = 'db_dir'
         out_arg = 'mapout'}
         else (params.metaphaln_ver == 'metaphlan3.1.0'){
