@@ -26,7 +26,7 @@ process metaphlan {
         db_arg = 'bowtie2db'
         out_arg = 'bowtie2out'
     }else {
-        throw new Exception("The metaphlan_ver must be 'metaphlan_v4' or 'metaphlan_v3', got '$metaphlan_ver'")
+        throw new Exception("The metaphlan_ver must be 'metaphlan_v4' or 'metaphlan_v3', got '${params.metaphlan_ver}'")
     }
 
     r1 = paired[0]
