@@ -39,7 +39,7 @@ process metaphlan {
     """
     cat $r1 $r2 $u1 $u2 > ${sample}_concatenated.fastq.gz
 
-    metaphlan concatenated.fastq.gz -o ${sample}_profile.tsv \
+    metaphlan ${sample}_concatenated.fastq.gz -o ${sample}_profile.tsv \
         --${out_arg} ${sample}_bowtie2.tsv \
         --samout ${sample}.sam \
         --input_type fastq \
