@@ -10,7 +10,7 @@ workflow {
     read_ch = Channel
         .fromPath("${params.readsdir}/*_R1.fastq.gz")
         .map { file ->
-            def sample = file.toString.replaceAll("_R1.fastq.gz", "")
+            def sample = file.baseName.replaceAll("_R1.fastq", "")
             def paired = [
                 "${params.readsdir}/${sample}_R1.fastq.gz",
                 "${params.readsdir}/${sample}_R2.fastq.gz"
