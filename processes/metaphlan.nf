@@ -19,14 +19,14 @@ process metaphlan {
     script:
     // metphlan4 changed metaphlan db variable from bowtie2db to db_dir
     // also changed from bowtie2out to mapout
-    if (params.metaphlan_ver == 'metaphlan4') {
+    if (params.metaphlan_ver == 'metaphlan_v4') {
         db_arg = 'db_dir'
         out_arg = 'mapout';
-    }else if (params.metaphlan_ver == 'metaphlan3.1.0'){
+    }else if (params.metaphlan_ver == 'metaphlan_v3'){
         db_arg = 'bowtie2db'
         out_arg = 'bowtie2out'
     }else {
-        throw new Exception("The metaphlan_ver must be 'metaphlan4' or 'metaphlan3.1.0'")
+        throw new Exception("The metaphlan_ver must be 'metaphlan_v4' or 'metaphlan_v3', got '$metaphlan_ver'")
     }
 
     r1 = paired[0]
