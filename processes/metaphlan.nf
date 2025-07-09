@@ -21,10 +21,12 @@ process metaphlan {
     // also changed from bowtie2out to mapout
     if (params.metaphlan_ver == 'metaphlan4') {
         db_arg = 'db_dir'
-        out_arg = 'mapout'}
-        else (params.metaphaln_ver == 'metaphlan3.1.0'){
+        out_arg = 'mapout';
+    }else if (params.metaphlan_ver == 'metaphlan3.1.0'){
         db_arg = 'bowtie2db'
         out_arg = 'bowtie2out'
+    }else {
+        throw new Exception("The metaphlan_ver must be 'metaphlan4' or 'metaphlan3.1.0'")
     }
 
     r1 = paired[0]
