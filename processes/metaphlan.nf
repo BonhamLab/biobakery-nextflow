@@ -44,7 +44,7 @@ process metaphlan {
         --samout ${sample}.sam \
         --input_type fastq \
         --nproc ${task.cpus} \
-        --${dbarg} ${params.metaphlan_db} \
+        --${db_arg} ${params.metaphlan_db} \
         --index ${params.metaphlan_index} \
         -t rel_ab_w_read_stats
     """
