@@ -1,6 +1,6 @@
 process metaphlan {
     tag "metaphlan on $sample"
-    publishDir "$params.outdir/metaphlan", mode: link, pattern: "*.tsv"
+    publishDir "$params.outdir/metaphlan", mode: 'link', pattern: "*.tsv"
     publishDir "$params.outdir/metaphlan", mode: 'link', pattern: "*.sam" // keeps sam file
 
     input:

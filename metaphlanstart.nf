@@ -2,7 +2,7 @@
 
 nextflow.enable.dsl=2
 
-include { metaphlan; metaphlan_bzip } from './processes/metaphlan.nf'
+include { metaphlan } from './processes/metaphlan.nf'
 include { humann; humann_regroup; humann_rename } from './processes/humann.nf'
 
 workflow {
