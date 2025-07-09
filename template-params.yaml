@@ -4,9 +4,9 @@ input_data_type: "fastq"
 # paired end data
 paired_end: "True"
 
-# filepattern: "*.bam" # need to adjust if bam or fastq
-# filepattern: "*.fastq" 
+# filepattern: "*_R{1,2}.fastq.gz" 
 filepattern: "*.fastq.gz" 
+
 
 
 ### Metaphlan version

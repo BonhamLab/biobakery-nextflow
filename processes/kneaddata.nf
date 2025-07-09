@@ -1,4 +1,5 @@
 process kneaddata {
+    // Run kneaddata on unpaired reads
     tag "kneaddata $sample"
     publishDir "$params.outdir/kneaddata"
     time { workflow.profile == 'standard' ? null : time * task.attempt }
