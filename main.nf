@@ -6,7 +6,7 @@ include { kneaddata } from './processes/kneaddata.nf'
 include { metaphlan; rename_metaphlan_database_version } from './processes/metaphlan.nf'
 include { humann; humann_regroup; humann_rename } from './processes/humann.nf'
 
-
+// if there is only 1 fastq per sample (not paired-end data)
 workflow {
     println "readsdir: ${params.readsdir}"
     println "filepattern: ${params.filepattern}"
@@ -25,3 +25,5 @@ workflow {
     regroup_out   = humann_regroup(humann_out.sample, humann_out.genefamilies)
     humann_rename(regroup_out)
 }
+
+
