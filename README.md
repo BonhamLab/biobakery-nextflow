@@ -39,6 +39,10 @@ Based on the profiles described in `nextflow.config`, we can run the pipeline wi
 ### Running locally
 `nextflow run main.nf --profile local -params-file template-params.yaml` 
 
+> Note: To be able to run the pipeline, you must have at least 15 GB of available memory (RAM). This is needed to run the memory-intensive mapping step in metaphlan. Anecdotally, a laptop with 16 GB RAM was insufficient to run the pipeline.
+
+
+
 ### Running on the HPC
 
 Jobs on the Tufts HPC can be run in two different ways:
@@ -79,7 +83,8 @@ Several databases must be installed to run this pipeline.
 
 #### A couple of pain points/things to know when downloading the Metaphlan databases:
 - You cannot download multiple metaphlan databases to the same directory
-- Downloading the bowtie2 database may take a bit of time (~60 minutes). If anything disrupts the download, remove the partially-downloaded file and try again. Any partially downloaded files will confuse metaphlan.
+- Downloading the bowtie2 database may take a bit of time (~30-60 minutes). If anything disrupts the download, remove the partially-downloaded file and try again. Any partially downloaded files will confuse metaphlan.
+- MD5 files must be downloaded along with the bowtie databases in a single download. They should not be downloaded separately from the bowtie databases (which you may be tempted to do if your connection fails after downloading the bowtie databases), as the MD5 checksum must match the bowtie database checksum. 
 
 
 ### HUMAnN
@@ -118,6 +123,7 @@ The `template-params.yaml` file defines all input parameters that you may want t
 - `readsdir`: path to directory that contains raw data 
 - `outdir`: path to directory where processed results will be saved
 - `human_genome`: path to directory that contains human reference database used during Kneaddata 
+- `trimmomatic_path`: path to directory that contains Trimmomatic download
 - `metaphlan_db`: path to directory that contains metaphlan databases
 - `metaphlan_index`: database version (database must exist within `metaphlan_db`)
 - `humann_db`: path to directory containing humann databases

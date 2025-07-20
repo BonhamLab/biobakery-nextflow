@@ -28,8 +28,8 @@ readsdir: "/Users/pintorson/Documents/tufts_bonham/biobakery-nextflow/test/rawfa
 outdir: "/Users/pintorson/Documents/tufts_bonham/biobakery-nextflow/test/results"
 human_genome: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/kneaddata"
 trimmomatic_path: "/Users/pintorson/miniconda3/envs/metaphlan_env/bin"
-metaphlan_db: "/Users/pintorson/miniconda3/envs/metaphlan_env/lib/python3.10/site-packages/metaphlan/metaphlan_databases"
-metaphlan_index: "mpa_vJan25_CHOCOPhlAnSGB_202503"
+metaphlan_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/metaphlan/vOct22_CHOCOPhlAnSGB_202403"
+metaphlan_index: "mpa_vOct22_CHOCOPhlAnSGB_202403"
 humann_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/humann"
 
 
@@ -38,6 +38,7 @@ humann_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/humann"
 # readsdir: "/cluster/tufts/bonhamlab/shared/sequencing/bam"
 # outdir: "/cluster/tufts/bonhamlab/shared/sequencing/processed"
 # human_genome: "/cluster/tufts/bonhamlab/shared/databases/biobakery/kneaddata"
+# trimmomatic_path: /cluster/tufts/bonhamlab/shared/conda-envs/metaphlan_v4.2/.CondaPkg/.pixi/envs/default/share/trimmomatic
 # metaphlan_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/metaphlan"
 # metaphlan_index: "mpa_vOct22_CHOCOPhlAnSGB_202403"
 # humann_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/humann/chocophlan"
@@ -47,6 +48,8 @@ humann_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/humann"
 # readsdir: "s3://vkc-nextflow/rawfastq/"
 # outdir: "s3://vkc-nextflow/output/"
 # human_genome: "s3://biobakery-databases/kneaddata_databases/"
+# trimmomatic_path: 
 # metaphlan_db: "s3://biobakery-databases/metaphlan_databases/"
+# metaphlan_index:
 # humann_db: "s3://biobakery-databases/humann_databases/chocophlan"
 
