@@ -1,6 +1,5 @@
 ### Data type
-# input_data_type: "bam"
-input_data_type: "fastq"
+
 # paired end data
 paired_end: "True"
 
