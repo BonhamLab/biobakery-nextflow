@@ -2,9 +2,10 @@
 
 nextflow.enable.dsl=2
 
-include { kneaddata } from './processes/kneaddata.nf'
-include { metaphlan; rename_metaphlan_database_version } from './processes/metaphlan.nf'
-include { humann; humann_regroup; humann_rename } from './processes/humann.nf'
+include { kneaddata } from "${projectDir}/processes/kneaddata.nf"
+include { metaphlan; rename_metaphlan_database_version; metaphlan_bam } from "${projectDir}/processes/metaphlan.nf"
+include { humann; humann_regroup; humann_rename } from "${projectDir}/processes/humann.nf"
+
 
 // if there is only 1 fastq per sample (not paired-end data)
 workflow {

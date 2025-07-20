@@ -113,7 +113,6 @@ There are some raw fastq files in `test/` which can be processed through the pip
 The `template-params.yaml` file defines all input parameters that you may want to use to run the Nextflow pipeline. The file should **not** be used directly to run the pipeline. Rather, the user should select the params they need from the file based on how they would like to use the pipeline (software versions of MetaPhlAn or HUMAnN, computing environment, databases, input data etc. ), and paste these into a separate yaml file. This second yaml file can be used to run the Nextflow pipeline. 
 
 ### Overview of parameters in `template-params.yaml`
-- `input_data_type`: type of input data (either `fastq` or `bam`)
 - `paired_end`: True or False, given the type of input data
 - `filepattern`: regex describing sample naming convention (relative to the input data type)
     - If there are paired-end reads, make sure the pattern considers both R1 and R2 the same sample.
