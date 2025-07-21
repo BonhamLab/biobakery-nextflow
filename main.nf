@@ -6,19 +6,25 @@ include { kneaddata } from "${projectDir}/processes/kneaddata.nf"
 include { metaphlan; rename_metaphlan_database_version; metaphlan_bam } from "${projectDir}/processes/metaphlan.nf"
 include { humann; humann_regroup; humann_rename } from "${projectDir}/processes/humann.nf"
 
+println "readsdir: ${params.readsdir}"
+println "filepattern: ${params.filepattern}"
 
-// if there is only 1 fastq per sample (not paired-end data)
+read_ch.view { tuple -> "Running kneaddata on sample ${tuple[0]}, file ${tuple[1]}" }
+
+// this workflow takes read_ch (a tuple of sample names and file names) as input 
 workflow {
-    println "readsdir: ${params.readsdir}"
-    println "filepattern: ${params.filepattern}"
-    read_ch = Channel
-        .fromPath("${params.readsdir}/${params.filepattern}")
-        .map { file -> 
-            def sample = file.baseName  // ERR3405856.bam -> ERR3405856
-            return tuple(sample, file)
-        }
 
-    read_ch.view { tuple -> "Running kneaddata on sample ${tuple[0]}, file ${tuple[1]}" }
+    if (params.paired_end == "True"){
+        read_ch = Channel
+        .fromFilePairs("${params.readsdir}/${params.filepattern}")
+        } else if (params.paired_end == "False"){
+        read_ch = Channel
+            .fromPath("${params.readsdir}/${params.filepattern}")
+            .map { file -> 
+                def sample = file.baseName  // ERR3405856.bam -> ERR3405856
+                return tuple(sample, file)
+            }
+        }
 
     knead_out     = kneaddata(read_ch)
     metaphlan_out = metaphlan(knead_out.sample, knead_out.fastq)
