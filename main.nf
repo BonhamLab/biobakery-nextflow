@@ -39,12 +39,16 @@ workflow paired_end_workflow{
     read_ch = Channel
         .fromFilePairs("${params.readsdir}/${params.filepattern}")
 
-    knead_out     = paired_end_kneaddata(read_ch)
-    metaphlan_out = metaphlan(knead_out.sample, knead_out.fastq)
-    humann_out    = humann(metaphlan_out.sample, knead_out.fastq, metaphlan_out.profile)
-    regroup_out   = humann_regroup(humann_out.sample, humann_out.genefamilies)
-    humann_rename(regroup_out)
-    
+    knead_out     =         paired_end_kneaddata(read_ch)
+
+    metaphlan_out =         metaphlan(knead_out.sample, knead_out.fastq, knead_out.paired, knead_out.unpaired)
+    rename_metaphlan_out =  rename_metaphlan_database_version(metaphlan_out.sample)
+    metaphlan_bam_out =     metaphlan_bam(metaphlan_out.sample, metaphlan_out.bam)
+
+    humann_out =            humann(metaphlan_out.sample, knead_out.fastq, metaphlan_out.profile)
+    humann_regroup_out =    humann_regroup(humann_out.sample, humann_out.genefamilies)
+    humann_rename_out =     humann_rename(humann_regroup_out.sample, humann_regroup_out.ecs, 
+                            humann_regroup_out.kos, humann_regroup_out.pfams)
 
 
 
