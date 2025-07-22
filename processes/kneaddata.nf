@@ -9,7 +9,7 @@ process single_end_kneaddata {
     //maxRetries 3
 
     when:
-    params.paired_end == False
+    params.paired_end == false
 
     input:
     tuple val(sample), path(reads)
@@ -43,7 +43,7 @@ process paired_end_kneaddata {
     //maxRetries 3
 
     when:
-    params.paired_end == True
+    params.paired_end == true
 
     input:
     tuple val(sample), path(reads)
