@@ -1,7 +1,7 @@
 ### Data type
 
 # paired end data
-paired_end: True
+paired_end: true
 
 # filepattern: "*_R{1,2}.fastq.gz" 
 filepattern: "*.fastq.gz" 
