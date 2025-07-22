@@ -9,31 +9,59 @@ include { humann; humann_regroup; humann_rename } from "${projectDir}/processes/
 println "readsdir: ${params.readsdir}"
 println "filepattern: ${params.filepattern}"
 
-// this workflow takes read_ch (a tuple of sample names and file names) as input 
-workflow {
-
-    if (params.paired_end == true){
-        read_ch = Channel
-        .fromFilePairs("${params.readsdir}/${params.filepattern}")
-        } else if (params.paired_end == false){
-        read_ch = Channel
+// workflow for single-end data
+workflow single_end_workflow{
+    read_ch = Channel
             .fromPath("${params.readsdir}/${params.filepattern}")
             .map { file -> 
                 def sample = file.baseName  // ERR3405856.fastq -> ERR3405856
                 return tuple(sample, file)
             }
-        }
-        else {
-        throw new Exception("The paired_end must be bool True or False, got '${params.paired_end}'")
-        }
 
-    read_ch.view { tuple -> "Running kneaddata on sample ${tuple[0]}, file ${tuple[1]}" }
+    knead_out     =         single_end_kneaddata(read_ch)
 
-    knead_out     = kneaddata(read_ch)
+    metaphlan_out =         metaphlan(knead_out.sample, knead_out.fastq)
+    rename_metaphlan_out =  rename_metaphlan_database_version(metaphlan_out.sample)
+    metaphlan_bam_out =     metaphlan_bam(metaphlan_out.sample, metaphlan_out.bam)
+
+    humann_out =            humann(metaphlan_out.sample, knead_out.fastq, metaphlan_out.profile)
+    humann_regroup_out =    humann_regroup(humann_out.sample, humann_out.genefamilies)
+    humann_rename_out =     humann_rename(humann_regroup_out.sample, humann_regroup_out.ecs, 
+                            humann_regroup_out.kos, humann_regroup_out.pfams)
+
+
+}
+
+
+// workflow for paired-end data
+
+workflow paired_end_workflow{
+    read_ch = Channel
+        .fromFilePairs("${params.readsdir}/${params.filepattern}")
+
+    knead_out     = paired_end_kneaddata(read_ch)
     metaphlan_out = metaphlan(knead_out.sample, knead_out.fastq)
     humann_out    = humann(metaphlan_out.sample, knead_out.fastq, metaphlan_out.profile)
     regroup_out   = humann_regroup(humann_out.sample, humann_out.genefamilies)
     humann_rename(regroup_out)
+    
+
+
+
 }
 
 
+// main workflow
+workflow {
+
+    if (params.paired_end == true){
+        paired_end_workflow
+        } else if (params.paired_end == false){
+        single_end_workflow
+        }
+        else {
+        throw new Exception("The paired_end must be bool true or false, got '${params.paired_end}'")
+        }
+
+    read_ch.view { tuple -> "Running kneaddata on sample ${tuple[0]}, file ${tuple[1]}" }
+}
