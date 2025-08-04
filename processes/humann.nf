@@ -35,32 +35,6 @@ process humann {
     """
 }
 
-process humann_regroup {
-    // regroup gene families into functional categories
-    tag "humann_regroup on $sample"
-    publishDir "$params.outdir/humann/regroup"
-
-    input:
-    val  sample
-    path genefamilies
-
-    output:
-    val  sample , emit: sample
-    path "${sample}_ecs.tsv", emit: ecs
-    path "${sample}_kos.tsv", emit: kos
-    path "${sample}_pfams.tsv", emit: pfams
-
-
-    script:
-
-    """
-    humann_regroup_table --input $genefamilies --output ${sample}_ecs.tsv --custom ${params.humann_utility_db}/map_level4ec_uniclust90.txt.gz
-    humann_regroup_table --input $genefamilies --output ${sample}_kos.tsv --custom ${params.humann_utility_db}/map_ko_uniref90.txt.gz
-    humann_regroup_table --input $genefamilies --output ${sample}_pfams.tsv --custom ${params.humann_utility_db}/map_pfam_uniref90.txt.gz
-    """
-}   
-
-
 process humann_rename {
     // add names to individual feature IDs
     tag "humann_rename on $sample"

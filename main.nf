@@ -38,7 +38,6 @@ include { humann; humann_regroup; humann_rename } from "${projectDir}/processes/
     metaphlan_bam_out =     metaphlan_bam(metaphlan_out.sample, metaphlan_out.bam)
 
     humann_out =            humann(metaphlan_out.sample, knead_out.fastq, metaphlan_out.profile)
-    humann_regroup_out =    humann_regroup(humann_out.sample, humann_out.genefamilies)
-    humann_rename_out =     humann_rename(humann_regroup_out.sample, humann_regroup_out.ecs,
-                            humann_regroup_out.kos, humann_regroup_out.pfams)
+    humann_rename_out =     humann_rename(humann_out.sample, humann_out.ecs,
+                            humann_out.kos, humann_out.pfams)
     }
