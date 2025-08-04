@@ -67,4 +67,8 @@ process paired_end_kneaddata {
 
     gzip ${sample}_kneaddata*.fastq
     """  
+
+
+    // Add concatenation step here instead 
+    // Make sure concatenated files are passed on and not saved
 }
