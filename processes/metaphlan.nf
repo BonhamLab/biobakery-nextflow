@@ -1,29 +1,3 @@
-process preprocess_paired_end_metaphlan {
-
-    when:
-        params.paired_end == false
-
-    input:
-        val(sample)
-        path(paired)
-        path(unpaired)
-
-    output:
-        path "${sample}_concatenated.fastq.gz", emit: concatenated
-    
-    script:
-        r1 = paired[0]
-        r2 = paired[1]
-        u1 = unpaired[0]
-        u2 = unpaired[1]
-
-        """
-        cat $r1 $r2 $u1 $u2 > ${sample}_concatenated.fastq.gz
-        """
-}
-
-
-
 process metaphlan {
     tag "metaphlan on $sample"
     publishDir "$params.outdir/metaphlan", mode: 'link', pattern: "*.tsv"

@@ -52,8 +52,8 @@ process paired_end_kneaddata {
     val(sample), emit: sample
     path("${sample}_kneaddata_paired_{1,2}.fastq.gz"), emit: paired
     path("${sample}_kneaddata_unmatched_{1,2}.fastq.gz"), emit: unpaired
-    path "${sample}_kneaddata*.fastq.gz" , optional:true , emit: others
     path "${sample}_kneaddata.log"                       , emit: log
+    path "${sample}_concatenated.fastq.gz"                       , emit: fastq
 
     shell:
     
@@ -66,9 +66,10 @@ process paired_end_kneaddata {
               --trimmomatic ${params.trimmomatic_path}
 
     gzip ${sample}_kneaddata*.fastq
-    """  
+  
+    cat $r1 $r2 $u1 $u2 > ${sample}_concatenated.fastq.gz
+    """
 
 
-    // Add concatenation step here instead 
-    // Make sure concatenated files are passed on and not saved
+
 }
