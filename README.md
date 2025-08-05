@@ -1,8 +1,11 @@
 # Nextflow pipeline for running the bioBakery
 
-by Kevin Bonham, PhD and Danielle Pinto
+![Static Badge](https://img.shields.io/badge/Author-Kevin_Bonham_PhD-purple)
+![Static Badge](https://img.shields.io/badge/Author-Guilherme_Fahur_Bottino_PhD-purple)
+![Static Badge](https://img.shields.io/badge/Author-Danielle_Pinto-purple)
 
-[bioBakery](https://github.com/biobakery): software, documentation, and tutorials for microbial community profiling (created and mantained by the Huttenhower lab)
+[bioBakery](https://github.com/biobakery): software, documentation,
+and tutorials for microbial community profiling (created and mantained by the Huttenhower lab)
 
 - [`KneadData`](https://github.com/biobakery/kneaddata): 
   a data quality-control pipeline that trims low quality reads
@@ -188,3 +191,56 @@ The `template-params.yaml` file defines all input parameters that you may want t
   between different protein annotations (eg UniRef90 to KO or EC),
   and names for all of the different annotations that have them
 
+## Pipeline outputs
+
+> [!NOTE] Aspirational
+> Not all of this section may be reflected in the current pipeline
+
+The general structure of outputs is
+
+- `${UID}` is the unique sequence identifier, eg `SEQ99999_S1`
+- `${DB}` is a chocophlan database, eg `mpa_vOct22_CHOCOPhlAnSGB_202403`
+- `${H_VERSION}` is a `humann` version,
+  eg `v4a` or `v37`
+
+```txt
+./raw_data_root_folder/
+├── rawfastq/
+    ├── ${UID}_l001_r1_0001.fastq.gz
+    └── ${UID}_l001_r2_0001.fastq.gz
+
+./processing_root_folder/
+    ├── kneaddata/
+    │   ├── ${UID}_kneaddata.log
+    │   ├── ${UID}_kneaddata_paired_1.fastq.gz
+    │   ├── ${UID}_kneaddata_paired_2.fastq.gz
+    │   ├── ${UID}_kneaddata_unmatched_1.fastq.gz
+    │   └── ${UID}_kneaddata_unmatched_2.fastq.gz
+    ├── metaphlan
+    │   └── ${DB}
+    │       ├── ${UID}_${DB}_profile.tsv
+    │       ├── ${UID}_${DB}_bowtie2.tsv
+    │       └── ${UID}_${DB}.sam.bz2
+    └── humann
+        └── ${H_VERSION}
+            ├── ${UID}_${H_VERSION}_genefamilies.tsv
+            ├── ${UID}_${H_VERSION}_pathabundance.tsv
+            └── ${UID}_${H_VERSION}_pathcoverage.tsv
+```
+
+> [!NOTE] Humann file formats
+> In humann v4a, the outputs are slightly different.
+> The files are structured like:
+> 
+> ```
+>     └── humann
+>        └── ${H_VERSION}
+>            ├── ${UID}_${H_VERSION}_0.log
+>            ├── ${UID}_${H_VERSION}_2_genefamilies.tsv
+>            ├── ${UID}_${H_VERSION}_3_reactions.tsv
+>            └── ${UID}_${H_VERSION}_4_pathabundance.tsv
+> ```
+
+### Deprecated structure
+
+- `humann`
