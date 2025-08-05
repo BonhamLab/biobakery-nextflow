@@ -243,4 +243,8 @@ The general structure of outputs is
 
 ### Deprecated structure
 
-- `humann`
+- `humann` used to have 3 subfolders, `main`, `regroup`, `rename`.
+  These have been deprecated in favor of only saving primary outputs
+  in long-term storage. 
+  Regrouped and renamed files can be trivially created from primary outputs.
+
