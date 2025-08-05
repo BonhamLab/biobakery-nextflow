@@ -1,6 +1,6 @@
 # Nextflow pipeline for running the bioBakery
 
-by Kevin Bonham, PhD 
+by Kevin Bonham, PhD and Danielle Pinto
 
 [bioBakery](https://github.com/biobakery): software, documentation, and tutorials for microbial community profiling (created and mantained by the Huttenhower lab)
 
@@ -43,7 +43,9 @@ we can run the pipeline with the following Nextflow commands:
 
 ### Running locally
 
-`nextflow run main.nf -profile local -params-file params.yaml` 
+```sh
+nextflow run main.nf -profile local -params-file params.yaml`
+```
 
 ### Running on the HPC
 
@@ -60,19 +62,25 @@ With how the HPC environment is currently defined in `nextflow.config`,
 jobs will first be submitted to the `batch` or `preempt` queue, whichever is available first.
 
 ```sh
-nextflow run main.nf -profile tufts_hpc -params-file params.yaml` 
+nextflow run main.nf -profile tufts_hpc -params-file params.yaml
 ```
 
-
 ### Running on AWS
+
+The AWS setup is too complicated to describe here for the moment,
+but requires setting up and correctly configuring:
+
+- Amazon machine images (AMIs) with the correct software installed and resources available
+  - note that often the IOPS (I/O operations per second) can be overwhelmed if multiple
+    jobs are run on the same image and all try to pull containers at the same time
+- Job queues that define which AMI should be used for different jobs
+- machine users with the correct permissions
+- S3 buckets with correct permissions
+- Containers with the correct versions of different software uploaded to ECR or docker-hub
 
 ```sh
 nextflow main.nf -profile amazon -params-file params.yaml`
 ```
-
-> Kevin may want to add additional comments here about different ways to run the pipeline
-
-> Note: We can also process samples on the MIT `engaging` cluster, but that should probably not be used without permission
 
 ## Databases
 
@@ -99,7 +107,46 @@ Several databases must be installed to run this pipeline.
 
 ### HUMAnN
 
-- Database can be downloaded [here](http://cmprod1.cibio.unitn.it/databases/HUMAnN/).
+The `humann_databases` command should be used to interact with and download
+the databases used by the software.
+Minimally there are 3 databases required:
+
+- `nucleotide` - this defines the link between ChocoPhlAn marker genes database
+  and genomes of taxa that `humann` will first attempt to align to
+- `protein` - this is a DIAMOND (by default) database to align protein sequences
+  if the nucleotide-based search does not find a hit
+- `utility_mapping` - This defines things like mappings between UniRef90 and other annotations (KO, EC, etc),
+  human-readable names for database accessions, etc.
+
+The available databases can be seen with using the following command:
+
+```sh
+humann_databases --available
+```
+
+To download a specific database,
+use `humann_databases --download` and include the database and the particular build, as well as the download location
+For example:
+
+```sh
+humann_databases --download chocophlan full /some/path/to/databases
+```
+
+By default, this will also update the local configuration.
+You can use `--upadate-config no` do disable this.
+
+An alternate approach is to download databases manually,
+eg [http://huttenhower.sph.harvard.edu/humann_data/chocophlan/full_chocophlan.v201901_v31.tar.gz].
+To set the `humann` configuration to point to an existing download,
+you can use `humann_config`, eg:
+
+```sh
+humann_config --update database_folders nucleotide /some/path/to/databases/chocophlan
+```
+
+The location of databases can also be set independently of the configuration
+by passing command line flags when running `humann`.
+For example `humann --nucleotide-database /some/path/to/databases/chocophlan ...`
 
 ## Information on software versions
 
@@ -107,13 +154,13 @@ This pipeline supports the following versions of MetaPhlAn and HUMAnN:
  
  ### MetaPhlAn
 
-- MetaPhlAn 3.1.0
-- MetaPhlAn 4
+- MetaPhlAn v3.1.0
+- MetaPhlAn v4
 
 ### HUMAnN
 
-- HUMAnN3 3.7
-- HUMAnN3 4 alpha
+- HUMAnN v3.7
+- HUMAnN v4 alpha
 
 ## Testing the pipeline
 
