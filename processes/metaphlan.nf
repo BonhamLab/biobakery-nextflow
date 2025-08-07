@@ -6,23 +6,16 @@ process metaphlan {
     input:
     val(sample)
     path(kneads)
-    path(paired), optional true
-    path(unpaired), optional true
-
+    
     output:
     val  sample                  , emit: sample
     path "${sample}_profile.tsv" , emit: profile
     path "${sample}_bowtie2.tsv" , emit: bowtie2
     path "${sample}.sam"         , emit: sam
-    path "${sample}_concatenated.fastq.gz", emit: concatenated
 
     script:
     // metaphlan4 changed metaphlan db variable from bowtie2db to db_dir
     // also changed from bowtie2out to mapout
-
-    if (params.paired_end == false){
-        kneads = preprocess_paired_end_metaphlan(sample, paired, unpaired)
-    }
 
     mp_ver = params.metaphlan_version
     if (mp_ver == 'metaphlan_v4') {

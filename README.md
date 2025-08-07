@@ -40,6 +40,7 @@ Based on the profiles described in `nextflow.config`, we can run the pipeline wi
 `nextflow run main.nf --profile local -params-file template-params.yaml` 
 
 > Note: To be able to run the pipeline, you must have at least 15 GB of available memory (RAM). This is needed to run the memory-intensive mapping step in metaphlan. Anecdotally, a laptop with 16 GB RAM was insufficient to run the pipeline.
+> Additionally, it has been notoriously challenging to download the metaphlan databases. It is recommended to run this pipeline on the Tufts HPC, where the environment and databases have already been established. 
 
 
 
@@ -85,6 +86,7 @@ Several databases must be installed to run this pipeline.
 - You cannot download multiple metaphlan databases to the same directory
 - Downloading the bowtie2 database may take a bit of time (~30-60 minutes). If anything disrupts the download, remove the partially-downloaded file and try again. Any partially downloaded files will confuse metaphlan.
 - MD5 files must be downloaded along with the bowtie databases in a single download. They should not be downloaded separately from the bowtie databases (which you may be tempted to do if your connection fails after downloading the bowtie databases), as the MD5 checksum must match the bowtie database checksum. 
+- Due to these issues, it is recommended to run the pipeline on the Tufts HPC (where database files have already been downloaded), rather than trying to re-download them locally.
 
 
 ### HUMAnN
