@@ -77,13 +77,9 @@ process metaphlan_bam {
 
     script:
     """
-    # Duplicate headers in output - skipping header validation
     samtools view -bS --no-PG ${sam} -o ${sample}_markers.bam
- 
-    # Alternative approach: strip and rebuild header
-    # samtools view -S ${sam} | samtools view -b -o ${sample}_markers.bam
-    
-    rm $sam
+
+    rm ${sam}
     """
 }
  
