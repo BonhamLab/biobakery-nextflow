@@ -14,10 +14,10 @@ include { humann; humann_rename } from "${projectDir}/processes/humann.nf"
         if (params.paired_end == true){
             println "Running paired_end_workflow"
             read_ch = Channel.fromFilePairs("${params.readsdir}/${params.filepattern}", flat: true)
-            println "Running kneaddata"
             knead_out     =         paired_end_kneaddata(read_ch)
-
-            } else if (params.paired_end == false){
+            } 
+            
+        else if (params.paired_end == false){
             println "Running single_end_workflow"
             read_ch = Channel
                 .fromPath("${params.readsdir}/${params.filepattern}")
