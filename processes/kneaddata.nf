@@ -26,10 +26,10 @@ process single_end_kneaddata {
     echo $sample
 
     kneaddata --unpaired $reads \
-              --reference-db ${params.human_genome} --output ./ \
+              --reference-db ${params.human_genome} --output kneaddata \
               --processes ${task.cpus} --output-prefix ${sample}_kneaddata
         
-    gzip ${sample}_kneaddata*.fastq
+    gzip kneaddata/${sample}_kneaddata*.fastq
     """  
 }
 

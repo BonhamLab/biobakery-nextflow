@@ -47,12 +47,13 @@ process metaphlan {
     val(sample)
 
     output:
-    path "${sample}_profile_${params.metaphlan_index}.tsv"
-    path "${sample}_bowtie2_${params.metaphlan_index}.tsv"
-    path "${sample}_${params.metaphlan_index}.sam"
+    path "metaphlan/${mp_ver}/${sample}_profile_${params.metaphlan_index}.tsv"
+    path "metaphlan/${mp_ver}/${sample}_bowtie2_${params.metaphlan_index}.tsv"
+    path "metaphlan/${mp_ver}/${sample}_${params.metaphlan_index}.sam"
 
     script:
     """
+    cd metaphlan/${mp_ver}
     mv "${sample}_profile.tsv" "${sample}_profile_${params.metaphlan_index}.tsv"
     mv "${sample}_bowtie2.tsv" "${sample}_bowtie2_${params.metaphlan_index}.tsv"
     mv "${sample}.sam"  "${sample}_${params.metaphlan_index}.sam"
@@ -62,7 +63,7 @@ process metaphlan {
 
 process metaphlan_bam {
     tag "metaphlan_bam on $sample"
-    publishDir "$params.outdir/metaphlan"
+    publishDir "$params.outdir/metaphlan/bam"
     stageInMode "copy"
 
     input:

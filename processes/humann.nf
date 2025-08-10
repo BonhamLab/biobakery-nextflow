@@ -3,7 +3,7 @@
 process humann {
     // process samples with humann
     tag "humann on $sample"
-    publishDir "$params.outdir/humann/main", mode: 'link'
+    publishDir "$params.outdir/humann/$params.humann_version", mode: 'link'
     memory { workflow.profile == 'standard' ? null : memory * task.attempt }
     cpus { workflow.profile == 'standard' ? null : cpus * task.attempt }
 
@@ -26,7 +26,7 @@ process humann {
     script:
 
     """
-    humann --input $catkneads --taxonomic-profile $profile --output ./ \
+    humann --input $catkneads --taxonomic-profile $profile --output humann/$params.humann_version \
         --threads ${task.cpus} --remove-temp-output \
         --protein-database ${params.humann_db}/chocophlan \
         --nucleotide-database ${params.humann_nucleotide_db}/uniref \
@@ -38,7 +38,7 @@ process humann {
 process humann_rename {
     // rename humann output 
     tag "humann_rename on $sample"
-    publishDir "$params.outdir/humann/rename"
+    publishDir "$params.outdir/humann/$params.humann_version/"
 
     input:
     val sample
