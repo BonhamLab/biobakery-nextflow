@@ -52,26 +52,19 @@ process humann_rename {
     path "${sample}_2_genefamilies.tsv"
     path "${sample}_0.log"    
     path "${sample}_3_reactions.tsv"
-    path "${sample}_4_pathabundance.tsv"
+    path "${sample}_4_pathabundance.tsv", optional: true
 
     script:
     hp_ver = params.humann_version
-    if (hp_ver == 'humann_v37') {
-        huamnn_db_ver = 'v201901' // need to double check this value
-    }else if (hp_ver == 'humann_v4a'){
-        huamnn_db_ver = 'v201901_v31'
-
-    }else {
-        throw new Exception("The humann_version must be 'humann_v37' or 'humann_v4a', got '${hp_ver}'")
-    }
-
     // Rename file output to include humann DB used for functional profiling
 
     """
-    mv "${sample}_2_genefamilies.tsv" "${sample}_2_genefamilies_${huamnn_db_ver}.tsv"
-    mv "${sample}_0.log"  "${sample}_0_${huamnn_db_ver}.log"
-    mv "${sample}_3_reactions.tsv"  "${sample}_3_reactions_${huamnn_db_ver}.tsv"
-    mv "${sample}_4_pathabundance.tsv"  "${sample}_4_pathabundanc_${huamnn_db_ver}.tsv"
+    mv "${sample}_2_genefamilies.tsv" "${sample}_2_genefamilies_${hp_ver}.tsv"
+    mv "${sample}_0.log"  "${sample}_0_${hp_ver}.log"
+    mv "${sample}_3_reactions.tsv"  "${sample}_3_reactions_${hp_ver}.tsv"
+
+    if [[ "$hp_ver" == "humann_v4a" ]]; then
+        mv "${sample}_4_pathabundance.tsv"  "${sample}_4_pathabundanc_${hp_ver}.tsv"
     """
 }
 
