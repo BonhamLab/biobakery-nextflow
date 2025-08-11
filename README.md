@@ -60,10 +60,11 @@ With how the HPC environment is currently defined in `nextflow.config`,
 jobs will first be submitted to the `batch` or `preempt` queue, whichever is available first.
 
 
-- `nextflow run main.nf --profile tufts_hpc -params-file template-params.yaml` 
+- `nextflow run main.nf --profile tufts_hpc -params-file tuftshpc-params.yaml` 
+  - Prior to scheduling the job, make sure to load nextflow `module load nextflow` and add bin to your path (`export PATH="/cluster/tufts/bonhamlab/shared/bin:$PATH"`)
 
 ### Running on AWS
-`nextflow main.nf --profile amazon -params-file template-params.yaml` 
+`nextflow main.nf --profile amazon -params-file aws-params.yaml` 
 
 > Note: We can also process samples on the MIT `engaging` cluster, but that should probably not be used without permission
 
