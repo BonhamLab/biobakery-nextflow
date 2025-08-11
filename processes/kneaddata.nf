@@ -58,7 +58,9 @@ process paired_end_kneaddata {
     shell:
     
     """
+
     echo $sample
+    echo $reads
 
     mkdir kneaddata
 
