@@ -69,7 +69,7 @@ process paired_end_kneaddata {
 
     gzip kneaddata/${sample}_kneaddata*.fastq
     
-    cat kneaddata/${sample}_kneaddata*.fastq > ${sample}_concatenated.fastq.gz
+    cat kneaddata/${sample}_kneaddata*.fastq > kneaddata/${sample}_concatenated.fastq.gz
     """
 
 
