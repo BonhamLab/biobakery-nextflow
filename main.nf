@@ -13,7 +13,8 @@ include { humann; humann_rename } from "${projectDir}/processes/humann.nf"
         
         if (params.paired_end == true){
             println "Running paired_end_workflow"
-            read_ch = Channel.fromFilePairs("${params.readsdir}/${params.filepattern}", flat: true)
+            read_ch = Channel.fromFilePairs("${params.readsdir}/${params.filepattern}")
+            println "Running paired_end_workflow"
             knead_out     =         paired_end_kneaddata(read_ch)
             } 
             
