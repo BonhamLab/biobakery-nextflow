@@ -34,7 +34,7 @@ humann_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/humann"
 
 
 # Tufts HPC params
-# readsdir: "/cluster/tufts/bonhamlab/shared/sequencing/bam"
+# readsdir: "cshared/sequencing/bam"
 # outdir: "/cluster/tufts/bonhamlab/shared/sequencing/processed"
 # human_genome: "/cluster/tufts/bonhamlab/shared/databases/biobakery/kneaddata"
 # trimmomatic_path: /cluster/tufts/bonhamlab/shared/conda-envs/metaphlan_v4.2/.CondaPkg/.pixi/envs/default/share/trimmomatic
