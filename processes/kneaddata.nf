@@ -50,8 +50,10 @@ process paired_end_kneaddata {
 
     output:
     val(sample), emit: sample
-    path("${sample}_kneaddata_paired_{1,2}.fastq.gz"), emit: paired
-    path("${sample}_kneaddata_unmatched_{1,2}.fastq.gz"), emit: unpaired
+    path("${sample}_kneaddata_paired_1.fastq.gz"), emit: paired1
+    path("${sample}_kneaddata_paired_2.fastq.gz"), emit: paired2
+    path("${sample}_kneaddata_unmatched_1.fastq.gz"), emit: unpaired1
+    path("${sample}_kneaddata_unmatched_2.fastq.gz"), emit: unpaired2
     path "${sample}_kneaddata.log"                       , emit: log
     path "${sample}_concatenated.fastq.gz"                       , emit: kneads
 
