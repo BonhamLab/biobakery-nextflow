@@ -52,6 +52,8 @@ process metaphlan {
     path "metaphlan/${mp_ver}/${sample}_${params.metaphlan_index}.sam"
 
     script:
+
+    mp_ver = params.metaphlan_version
     """
     cd metaphlan/${mp_ver}
     mv "${sample}_profile.tsv" "${sample}_profile_${params.metaphlan_index}.tsv"
