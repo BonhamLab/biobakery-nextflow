@@ -26,7 +26,7 @@ process single_end_kneaddata {
     echo $sample
 
     kneaddata --unpaired $reads \
-              --reference-db ${params.human_genome} --output kneaddata \
+              --reference-db ${params.human_genome} --output ./ \
               --processes ${task.cpus} --output-prefix ${sample}_kneaddata
         
     gzip kneaddata/${sample}_kneaddata*.fastq
@@ -62,12 +62,12 @@ process paired_end_kneaddata {
     echo $sample
     echo $reads
 
-    kneaddata -i1 ${reads[0]} -i2 ${reads[1]} \
+    kneaddata -i ${reads[0]} -i ${reads[1]} \
               --reference-db ${params.human_genome} --output ./ \
               --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
               --trimmomatic ${params.trimmomatic_path}
 
-    gzip ${sample}_kneaddata*.fastq.gz
+    gzip ${sample}_kneaddata*.fastq
     
     cat ${sample}_kneaddata*.fastq.gz > ${sample}_concatenated.fastq.gz
     """
