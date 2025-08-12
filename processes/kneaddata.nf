@@ -69,9 +69,9 @@ process paired_end_kneaddata {
               --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
               --trimmomatic ${params.trimmomatic_path}
 
-    gzip kneaddata/${sample}_kneaddata*.fastq
+    gzip kneaddata/${sample}_kneaddata*.fastq.gz
     
-    cat kneaddata/${sample}_kneaddata*.fastq > kneaddata/${sample}_concatenated.fastq.gz
+    cat kneaddata/${sample}_kneaddata*.fastq.gz > kneaddata/${sample}_concatenated.fastq.gz
     """
 
 
