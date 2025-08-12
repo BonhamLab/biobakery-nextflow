@@ -62,16 +62,14 @@ process paired_end_kneaddata {
     echo $sample
     echo $reads
 
-    mkdir kneaddata
-
     kneaddata -i1 ${reads[0]} -i2 ${reads[1]} \
-              --reference-db ${params.human_genome} --output kneaddata \
+              --reference-db ${params.human_genome} --output ./ \
               --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
               --trimmomatic ${params.trimmomatic_path}
 
-    gzip kneaddata/${sample}_kneaddata*.fastq.gz
+    gzip ${sample}_kneaddata*.fastq.gz
     
-    cat kneaddata/${sample}_kneaddata*.fastq.gz > kneaddata/${sample}_concatenated.fastq.gz
+    cat ${sample}_kneaddata*.fastq.gz > ${sample}_concatenated.fastq.gz
     """
 
 
