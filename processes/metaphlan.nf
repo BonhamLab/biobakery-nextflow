@@ -46,13 +46,7 @@ process metaphlan {
     input:
     val(sample)
 
-    output:
-    path "$params.outdir/metaphlan/$params.metaphlan_version/${sample}_profile_${params.metaphlan_index}.tsv"
-    path "$params.outdir/metaphlan/$params.metaphlan_version/${sample}_bowtie2_${params.metaphlan_index}.tsv"
-    path "$params.outdir/metaphlan/$params.metaphlan_version/${sample}_${params.metaphlan_index}.sam"
-
     script:
-
     """
     cd "$params.outdir/metaphlan"/$params.metaphlan_version
     mv "${sample}_profile.tsv" "${sample}_profile_${params.metaphlan_index}.tsv"
