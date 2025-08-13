@@ -26,7 +26,7 @@ process humann {
     script:
 
     """
-    humann --input $catkneads --taxonomic-profile $profile --output humann/$params.humann_version \
+    humann --input $catkneads --taxonomic-profile $profile --output ./ \
         --threads ${task.cpus} --remove-temp-output \
         --protein-database ${params.humann_db}/chocophlan \
         --nucleotide-database ${params.humann_nucleotide_db}/uniref \
@@ -42,17 +42,7 @@ process humann_rename {
 
     input:
     val sample
-    path genefamilies
-    path log
-    path reactions
-    path pathabundance
-
-    output:
-    val  sample , emit: sample
-    path "${sample}_2_genefamilies.tsv"
-    path "${sample}_0.log"    
-    path "${sample}_3_reactions.tsv"
-    path "${sample}_4_pathabundance.tsv", optional: true
+    
 
     script:
     hp_ver = params.humann_version
