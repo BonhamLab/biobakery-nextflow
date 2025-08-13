@@ -29,8 +29,8 @@ process humann {
     humann --input $catkneads --taxonomic-profile $profile --output ./ \
         --threads ${task.cpus} --remove-temp-output \
         --protein-database ${params.humann_db}/chocophlan \
-        --nucleotide-database ${params.humann_nucleotide_db}/uniref \
-        --utility-database ${params.humann_utility_db}/utility_mapping \
+        --nucleotide-database ${params.humann_db}/uniref \
+        --utility-database ${params.humann_db}/utility_mapping \
         --output-basename $sample 
     """
 }
