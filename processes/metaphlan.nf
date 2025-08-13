@@ -1,7 +1,7 @@
 process metaphlan {
     tag "metaphlan on $sample"
-    publishDir "$params.outdir/metaphlan", mode: 'link', pattern: "*.tsv"
-    publishDir "$params.outdir/metaphlan", mode: 'link', pattern: "*.sam" 
+    publishDir "$params.outdir/metaphlan/$params.metaphlan_index", mode: 'link', pattern: "*.tsv"
+    publishDir "$params.outdir/metaphlan/$params.metaphlan_index", mode: 'link', pattern: "*.sam" 
     
     input:
     val(sample)
@@ -48,7 +48,7 @@ process metaphlan {
 
     script:
     """
-    cd "$params.outdir/metaphlan"/$params.metaphlan_version
+    cd "$params.outdir/metaphlan"/$params.metaphlan_index
     mv "${sample}_profile.tsv" "${sample}_profile_${params.metaphlan_index}.tsv"
     mv "${sample}_bowtie2.tsv" "${sample}_bowtie2_${params.metaphlan_index}.tsv"
     mv "${sample}.sam"  "${sample}_${params.metaphlan_index}.sam"
