@@ -56,26 +56,26 @@ process metaphlan {
     }
 
 
-process metaphlan_bam {
-    tag "metaphlan_bam on $sample"
-    publishDir "$params.outdir/metaphlan/bam"
-    stageInMode "copy"
+// process metaphlan_bam {
+//     tag "metaphlan_bam on $sample"
+//     publishDir "$params.outdir/metaphlan/bam"
+//     stageInMode "copy"
 
-    input:
-    val sample
-    path sam
+//     input:
+//     val sample
+//     path sam
 
-    output:
-    val  sample          , emit: sample
-    path "${sample}_markers.bam" , emit: bam
+//     output:
+//     val  sample          , emit: sample
+//     path "${sample}_markers.bam" , emit: bam
 
-    when:
+//     when:
 
-    script:
-    """
-    samtools view -bS --no-PG ${sam} -o ${sample}_markers.bam
+//     script:
+//     """
+//     samtools view -bS --no-PG ${sam} -o ${sample}_markers.bam
 
-    rm ${sam}
-    """
-}
+//     rm ${sam}
+//     """
+// }
  
