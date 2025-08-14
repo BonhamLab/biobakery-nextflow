@@ -64,7 +64,7 @@ process paired_end_kneaddata {
     echo $sample
     echo $reads
 
-    kneaddata -i ${reads[0]} -i ${reads[1]} \
+    kneaddata -i1 ${reads[0]} -i2 ${reads[1]} \
               --reference-db ${params.human_genome} --output ./ \
               --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
               --trimmomatic ${params.trimmomatic_path}
