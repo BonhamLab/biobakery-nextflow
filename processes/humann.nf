@@ -28,8 +28,8 @@ process humann {
     """
     humann --input $catkneads --taxonomic-profile $profile --output ./ \
         --threads ${task.cpus} --remove-temp-output \
-        --protein-database ${params.humann_db}/chocophlan \
-        --nucleotide-database ${params.humann_db}/uniref \
+        --protein-database ${params.humann_db}/uniref \
+        --nucleotide-database ${params.humann_db}/chocophlan \
         --utility-database ${params.humann_db}/utility_mapping \
         --output-basename $sample 
     """
