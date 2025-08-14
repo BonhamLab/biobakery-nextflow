@@ -3,7 +3,7 @@
 nextflow.enable.dsl=2
 
 include { single_end_kneaddata; paired_end_kneaddata } from "${projectDir}/processes/kneaddata.nf"
-include { metaphlan;rename_metaphlan_database_version; metaphlan_bam } from "${projectDir}/processes/metaphlan.nf"
+include { metaphlan;rename_metaphlan_database_version} from "${projectDir}/processes/metaphlan.nf"
 include { humann; humann_rename } from "${projectDir}/processes/humann.nf"
 
 
