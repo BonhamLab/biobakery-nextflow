@@ -35,7 +35,13 @@ process single_end_kneaddata {
 
 process paired_end_kneaddata {
     tag "kneaddata $sample"
-    publishDir "$params.outdir/kneaddata", mode: 'link'
+    publishDir "$params.outdir/kneaddata", mode: 'link'saveAs: { f ->
+      // filenames to exclude from publishing
+      def n = f.name
+      if ( n ==~ /.+_concatenated\.fastq\.gz/ ) return null
+      // publish everything else
+      return n
+    }
     time { workflow.profile == 'standard' ? null : time * task.attempt }
     memory { workflow.profile == 'standard' ? null : memory * task.attempt }
 
@@ -55,7 +61,7 @@ process paired_end_kneaddata {
     path("${sample}_kneaddata_unmatched_1.fastq.gz"), emit: unpaired1
     path("${sample}_kneaddata_unmatched_2.fastq.gz"), emit: unpaired2
     path "${sample}_kneaddata.log"                       , emit: log
-    path "${sample}_concatenated.fastq.gz"                       , emit: kneads
+    path "${sample}_concatenated.fastq.gz"                       , emit: kneads // available for chaining; not published
 
     shell:
     
