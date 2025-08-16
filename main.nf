@@ -3,7 +3,7 @@
 nextflow.enable.dsl=2
 
 include { single_end_kneaddata; paired_end_kneaddata } from "${projectDir}/processes/kneaddata.nf"
-include { metaphlan;rename_metaphlan_database_version} from "${projectDir}/processes/metaphlan.nf"
+include { metaphlan;rename_metaphlan_database_version; metaphlan_bzip} from "${projectDir}/processes/metaphlan.nf"
 include { humann; humann_rename } from "${projectDir}/processes/humann.nf"
 
 
@@ -37,7 +37,7 @@ include { humann; humann_rename } from "${projectDir}/processes/humann.nf"
     
     metaphlan_out =         metaphlan(knead_out.sample, knead_out.kneads)
     rename_metaphlan_out =  rename_metaphlan_database_version(metaphlan_out.sample)
-    // metaphlan_bam_out =     metaphlan_bam(metaphlan_out.sample, metaphlan_out.sam)
+    metaphlan_bzip_out =     metaphlan_bzip(metaphlan_out.sample, read_ch)
     humann_out =            humann(metaphlan_out.sample, knead_out.kneads, metaphlan_out.profile)
     humann_rename_out =     humann_rename(humann_out.sample)
     }

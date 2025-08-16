@@ -57,25 +57,30 @@ process metaphlan {
 
 
 process metaphlan_bzip {
-    tag "metaphlan_bam on $sample"
+    tag "metaphlan_bzip on $sample"
     publishDir "$params.outdir/metaphlan/bzip"
     stageInMode "copy"
 
     input:
     val sample
-    path sam
+    path reads
 
-    output:
-    val  sample          , emit: sample
-    path "${sample}_markers.bam" , emit: bam
-
-    when:
+    if (params.paired_end) {
+        path "${reads[0]}.bz2" 
+        path "${reads[1]}.bz2" 
+    }
+    else {path "${reads}.bz2" }
 
     script:
     """
-    samtools view -bS --no-PG ${sam} -o ${sample}_markers.bam
+    if [[ "$params.paired_end" == true ]]; then
+        bzip2 "${reads[0]}.bz2" 
+        bzip2 "${reads[1]}.bz2" 
 
-    rm ${sam}
+    else; then
+        bzip2 "${reads}.bz2" 
+
+
     """
 }
  
