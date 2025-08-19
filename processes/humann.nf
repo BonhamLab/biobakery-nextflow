@@ -38,17 +38,16 @@ process humann {
 process humann_rename {
     // rename humann output 
     tag "humann_rename on $sample"
-    publishDir "$params.outdir/humann/$params.humann_version/"
 
     input:
     val sample
     
-
     script:
     hp_ver = params.humann_version
-    // Rename file output to include humann DB used for functional profiling
 
+    // Rename file output to include humann DB used for functional profiling
     """
+    cd "$params.outdir/metaphlan"/${hp_ver}
     mv "${sample}_2_genefamilies.tsv" "${sample}_2_genefamilies_${hp_ver}.tsv"
     mv "${sample}_0.log"  "${sample}_0_${hp_ver}.log"
     mv "${sample}_3_reactions.tsv"  "${sample}_3_reactions_${hp_ver}.tsv"
