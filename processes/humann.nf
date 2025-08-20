@@ -21,7 +21,7 @@ process humann {
     path "${sample}_2_genefamilies.tsv" , emit: genefamilies
     path "${sample}_0.log",             emit: log
     path "${sample}_3_reactions.tsv",   emit: reactions
-    path "${sample}_4_pathabundance.tsv", emit: pathabundance
+    path "${sample}_4_pathabundance.tsv", emit: pathabundance, optional:true
 
     script:
 
