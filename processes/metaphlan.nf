@@ -50,8 +50,9 @@ process metaphlan {
 
     output:
     val sample, emit: sample
-    path "${sample}_${params.metaphlan_index}.sam", emit: rename_sam
-
+    path("${sample}_profile_${params.metaphlan_index}.tsv"), emit: profile_rename
+    path("${sample}_bowtie2_${params.metaphlan_index}.tsv"), emit: bowtie_rename
+    path("${sample}_${params.metaphlan_index}.sam"),         emit: sam_rename
 
     script:
     """
