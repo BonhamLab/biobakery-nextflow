@@ -46,6 +46,11 @@ process metaphlan {
     input:
     val(sample)
 
+    output:
+    val sample, emit: sample
+    path "$params.outdir/metaphlan/$params.metaphlan_index/${sample}_${params.metaphlan_index}.sam", emit: rename_sam
+
+
     script:
     """
     cd "$params.outdir/metaphlan"/$params.metaphlan_index
@@ -63,24 +68,15 @@ process metaphlan_bzip {
 
     input:
     val sample
-    path reads
+    path sam
 
-    if (params.paired_end) {
-        path "${reads[0]}.bz2" 
-        path "${reads[1]}.bz2" 
-    }
-    else {path "${reads}.bz2" }
+    output:
+    val  sample          , emit: sample
+    path "${sample}_markers.bzip" , emit: bzip
 
     script:
     """
-    if [[ "$params.paired_end" == true ]]; then
-        bzip2 "${reads[0]}.bz2" 
-        bzip2 "${reads[1]}.bz2" 
-
-    else; then
-        bzip2 "${reads}.bz2" 
-
-
+    bzip2 $sam
     """
 }
  

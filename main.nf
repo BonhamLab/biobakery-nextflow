@@ -37,7 +37,7 @@ include { humann; humann_rename } from "${projectDir}/processes/humann.nf"
     
     metaphlan_out =         metaphlan(knead_out.sample, knead_out.kneads)
     rename_metaphlan_out =  rename_metaphlan_database_version(metaphlan_out.sample)
-    metaphlan_bzip_out =     metaphlan_bzip(metaphlan_out.sample, read_ch)
+                            metaphlan_bzip(rename_metaphlan_out.sample, rename_metaphlan_out.sam)
     humann_out =            humann(metaphlan_out.sample, knead_out.kneads, metaphlan_out.profile)
     humann_rename_out =     humann_rename(humann_out.sample)
     }
