@@ -75,10 +75,6 @@ process metaphlan_bzip {
     val sample
     path sam
 
-    output:
-    val  sample          , emit: sample
-    path "${sample}_markers.bzip" , emit: bzip
-
     script:
     """
     bzip2 $sam
