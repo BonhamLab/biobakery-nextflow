@@ -43,12 +43,14 @@ process metaphlan {
 
     process rename_metaphlan_database_version {
     // Rename file output to include metaphlan DB used for taxonomic ID
+    publishDir "$params.outdir/metaphlan/$params.metaphlan_index"
+
     input:
     val(sample)
 
     output:
     val sample, emit: sample
-    path "$params.outdir/metaphlan/$params.metaphlan_index/${sample}_${params.metaphlan_index}.sam", emit: rename_sam
+    path "${sample}_${params.metaphlan_index}.sam", emit: rename_sam
 
 
     script:
