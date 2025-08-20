@@ -42,12 +42,16 @@ process humann_rename {
 
     input:
     val sample
-
-    output:
     path genefamilies , emit: genefamilies
     path log          , emit: log
     path reactions    , emit: reactions
     path pathabundance, emit: pathabundance, optional:true
+
+    output:
+    path "${sample}_2_genefamilies_${hp_ver}.tsv"
+    path "${sample}_0_${hp_ver}.log"
+    path "${sample}_3_reactions_${hp_ver}.tsv"
+    path "${sample}_4_pathabundance_${hp_ver}.tsv", optional:true
     
     script:
     hp_ver = params.humann_version
@@ -59,7 +63,7 @@ process humann_rename {
     mv $reactions  "${sample}_3_reactions_${hp_ver}.tsv"
 
     if [[ "$hp_ver" == "humann_v4a" ]]; then
-        mv $pathabundance  "${sample}_4_pathabundanc_${hp_ver}.tsv"
+        mv $pathabundance  "${sample}_4_pathabundance_${hp_ver}.tsv"
     """
 }
 
