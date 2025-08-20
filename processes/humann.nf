@@ -42,10 +42,10 @@ process humann_rename {
 
     input:
     val sample
-    path genefamilies , emit: genefamilies
-    path log          , emit: log
-    path reactions    , emit: reactions
-    path pathabundance, emit: pathabundance, optional:true
+    path genefamilies 
+    path log          
+    path reactions    
+    path pathabundance, optional:true
 
     output:
     path "${sample}_2_genefamilies_${hp_ver}.tsv"
