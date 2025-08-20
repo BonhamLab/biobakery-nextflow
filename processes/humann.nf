@@ -21,7 +21,7 @@ process humann {
     path "${sample}_2_genefamilies.tsv" , emit: genefamilies
     path "${sample}_0.log",             emit: log
     path "${sample}_3_reactions.tsv",   emit: reactions
-    path "${sample}_4_pathabundance.tsv", emit: pathabundance, optional true
+    path "${sample}_4_pathabundance.tsv", emit: pathabundance
 
     script:
 
@@ -48,10 +48,10 @@ process humann_rename {
     path pathabundance, optional true
 
     output:
-    path "${sample}_2_genefamilies_${hp_ver}.tsv"
-    path "${sample}_0_${hp_ver}.log"
-    path "${sample}_3_reactions_${hp_ver}.tsv"
-    path "${sample}_4_pathabundance_${hp_ver}.tsv", optional true
+    path "${sample}_2_genefamilies_$params.humann_version.tsv"
+    path "${sample}_0_$params.humann_version.log"
+    path "${sample}_3_reactions_$params.humann_version.tsv"
+    path "${sample}_4_pathabundance_$params.humann_version.tsv", optional true
     
     script:
 
