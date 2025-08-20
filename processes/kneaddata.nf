@@ -37,7 +37,7 @@ process paired_end_kneaddata {
     tag "kneaddata $sample"
     publishDir "$params.outdir/kneaddata", mode: 'link', saveAs: { f ->
       // filenames to exclude from publishing
-      def n = f.name
+      def n = f.toString()
       if ( n ==~ /.+_concatenated\.fastq\.gz/ ) return null
       // publish everything else
       return n
