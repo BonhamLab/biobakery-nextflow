@@ -38,22 +38,28 @@ process humann {
 process humann_rename {
     // rename humann output 
     tag "humann_rename on $sample"
+    publishDir "$params.outdir/humann/$params.humann_version"
 
     input:
     val sample
+
+    output:
+    path genefamilies , emit: genefamilies
+    path log          , emit: log
+    path reactions    , emit: reactions
+    path pathabundance, emit: pathabundance, optional:true
     
     script:
     hp_ver = params.humann_version
 
     // Rename file output to include humann DB used for functional profiling
     """
-    cd "$params.outdir/metaphlan"/${hp_ver}
-    mv "${sample}_2_genefamilies.tsv" "${sample}_2_genefamilies_${hp_ver}.tsv"
-    mv "${sample}_0.log"  "${sample}_0_${hp_ver}.log"
-    mv "${sample}_3_reactions.tsv"  "${sample}_3_reactions_${hp_ver}.tsv"
+    mv $genefamilies "${sample}_2_genefamilies_${hp_ver}.tsv"
+    mv $log  "${sample}_0_${hp_ver}.log"
+    mv $reactions  "${sample}_3_reactions_${hp_ver}.tsv"
 
     if [[ "$hp_ver" == "humann_v4a" ]]; then
-        mv "${sample}_4_pathabundance.tsv"  "${sample}_4_pathabundanc_${hp_ver}.tsv"
+        mv $pathabundance  "${sample}_4_pathabundanc_${hp_ver}.tsv"
     """
 }
 
