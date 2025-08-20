@@ -54,16 +54,17 @@ process humann_rename {
     path "${sample}_4_pathabundance_${hp_ver}.tsv", optional true
     
     script:
-    hp_ver = params.humann_version
 
     // Rename file output to include humann DB used for functional profiling
     """
+    hp_ver="${params.humann_version}"
     mv $genefamilies "${sample}_2_genefamilies_${hp_ver}.tsv"
     mv $log  "${sample}_0_${hp_ver}.log"
     mv $reactions  "${sample}_3_reactions_${hp_ver}.tsv"
 
     if [[ "$hp_ver" == "humann_v4a" ]]; then
         mv $pathabundance  "${sample}_4_pathabundance_${hp_ver}.tsv"
+    fi
     """
 }
 
