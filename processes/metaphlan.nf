@@ -47,6 +47,9 @@ process metaphlan {
 
     input:
     val(sample)
+    path(profile)
+    path(bowtie2)
+    path(sam)
 
     output:
     val sample, emit: sample
@@ -56,10 +59,9 @@ process metaphlan {
 
     script:
     """
-    cd "$params.outdir/metaphlan"/$params.metaphlan_index
-    mv "${sample}_profile.tsv" "${sample}_profile_${params.metaphlan_index}.tsv"
-    mv "${sample}_bowtie2.tsv" "${sample}_bowtie2_${params.metaphlan_index}.tsv"
-    mv "${sample}.sam"  "${sample}_${params.metaphlan_index}.sam"
+    mv $profile "${sample}_profile_${params.metaphlan_index}.tsv"
+    mv $bowtie2 "${sample}_bowtie2_${params.metaphlan_index}.tsv"
+    mv $sam  "${sample}_${params.metaphlan_index}.sam"
     """
     }
 
