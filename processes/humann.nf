@@ -12,9 +12,9 @@ process humann {
 
 
     input:
-    val  sample
-    path catkneads
-    path profile
+    val(sample)
+    path(catkneads)
+    path(profile)
 
     output:
     val  sample                       , emit: sample
@@ -41,11 +41,11 @@ process humann_rename {
     publishDir "$params.outdir/humann/$params.humann_version"
 
     input:
-    val sample
-    path genefamilies 
-    path log          
-    path reactions    
-    path pathabundance, optional true
+    val(sample)
+    path(genefamilies)
+    path(log)       
+    path(reactions)  
+    path(pathabundance), optional true
 
     output:
     path "${sample}_2_genefamilies_${params.humann_version}.tsv"
