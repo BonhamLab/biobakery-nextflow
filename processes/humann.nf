@@ -45,13 +45,13 @@ process humann_rename {
     path(genefamilies)
     path(humann_log)       
     path(reactions)  
-    path(pathabundance) //, optional true
+    path(pathabundance) 
 
     output:
     path("${sample}_2_genefamilies_${params.humann_version}.tsv"), emit: genefamilies_rename
     path("${sample}_0_${params.humann_version}.log"), emit: log_rename
     path("${sample}_3_reactions_${params.humann_version}.tsv"), emit:reactions_rename
-    // path("${sample}_4_pathabundance_${params.humann_version}.tsv"), emit:pathabundance_rename, optional:true, 
+    path("${sample}_4_pathabundance_${params.humann_version}.tsv"), emit:pathabundance_rename, optional:true, 
     
     script:
     // Rename file output to include humann DB used for functional profiling
@@ -59,9 +59,6 @@ process humann_rename {
     mv $genefamilies "${sample}_2_genefamilies_${params.humann_version}.tsv"
     mv $humann_log  "${sample}_0_${params.humann_version}.log"
     mv $reactions  "${sample}_3_reactions_${params.humann_version}.tsv"
-
-    if [[ "$params.humann_version" == "humann_v4a" ]]; then
-        mv $pathabundance "${sample}_4_pathabundance_${params.humann_version}.tsv"
-    fi
+    mv $pathabundance "${sample}_4_pathabundance_${params.humann_version}.tsv"
     """
 }
