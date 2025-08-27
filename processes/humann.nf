@@ -18,10 +18,10 @@ process humann {
 
     output:
     val  sample                       , emit: sample
-    path "${sample}_2_genefamilies.tsv" , emit: genefamilies
-    path "${sample}_0.log",             emit: humann_log
-    path "${sample}_3_reactions.tsv",   emit: reactions
-    path "${sample}_4_pathabundance.tsv", optional:true, emit: pathabundance
+    path "${sample}_2_genefamilies_${params.humann_version}.tsv" , emit: genefamilies
+    path "${sample}_0_${params.humann_version}.log",             emit: humann_log
+    path "${sample}_3_reactions_${params.humann_version}.tsv",   emit: reactions
+    path "${sample}_4_pathabundance_${params.humann_version}.tsv", optional:true, emit: pathabundance
 
     script:
 
