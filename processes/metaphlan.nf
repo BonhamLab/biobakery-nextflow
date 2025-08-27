@@ -41,30 +41,6 @@ process metaphlan {
     """
 }
 
-    process rename_metaphlan_database_version {
-    // Rename file output to include metaphlan DB used for taxonomic ID
-    publishDir "$params.outdir/metaphlan/$params.metaphlan_index"
-
-    input:
-    val(sample)
-    path(profile)
-    path(bowtie2)
-    path(sam)
-
-    output:
-    val sample, emit: sample
-    path("${sample}_profile_${params.metaphlan_index}.tsv"), emit: profile_rename
-    path("${sample}_bowtie2_${params.metaphlan_index}.tsv"), emit: bowtie_rename
-    path("${sample}_${params.metaphlan_index}.sam"),         emit: sam_rename
-
-    script:
-    """
-    mv $profile "${sample}_profile_${params.metaphlan_index}.tsv"
-    mv $bowtie2 "${sample}_bowtie2_${params.metaphlan_index}.tsv"
-    mv $sam  "${sample}_${params.metaphlan_index}.sam"
-    """
-    }
-
 
 process metaphlan_bzip {
     tag "metaphlan_bzip on $sample"
