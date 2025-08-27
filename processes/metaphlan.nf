@@ -69,11 +69,13 @@ process metaphlan {
 process metaphlan_bzip {
     tag "metaphlan_bzip on $sample"
     publishDir "$params.outdir/metaphlan/bzip"
-    stageInMode "copy"
 
     input:
     val sample
-    path sam
+    path sam_rename
+
+    output:
+    path ("${sam_rename}.bz2"),         emit: sam_rename_bzip
 
     script:
     """
