@@ -9,9 +9,9 @@ process metaphlan {
     
     output:
     val  sample                  , emit: sample
-    path "${sample}_profile.tsv" , emit: profile
-    path "${sample}_bowtie2.tsv" , emit: bowtie2
-    path "${sample}.sam"         , emit: sam
+    path "${sample}_profile_${params.metaphlan_index}.tsv" , emit: profile
+    path "${sample}_bowtie2_${params.metaphlan_index}.tsv" , emit: bowtie2
+    path "${sample}_${params.metaphlan_index}.sam"         , emit: sam
 
     script:
     // metaphlan4 changed metaphlan db variable from bowtie2db to db_dir
