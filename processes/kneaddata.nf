@@ -1,19 +1,22 @@
-process kneaddata {
+process single_end_kneaddata {
+    // Run kneaddata on single reads
     tag "kneaddata $sample"
-    publishDir "$params.outdir/kneaddata"
+    publishDir "$params.outdir/kneaddata", mode: 'link'
     time { workflow.profile == 'standard' ? null : time * task.attempt }
     memory { workflow.profile == 'standard' ? null : memory * task.attempt }
 
-    errorStrategy 'retry'
-    maxRetries 3
+    //errorStrategy 'retry'
+    //maxRetries 3
+
+    when:
+    params.paired_end == false
 
     input:
     tuple val(sample), path(reads)
-    path human_genome
 
     output:
-    tuple val(sample), path("${sample}_kneaddata_paired_{1,2}.fastq.gz")
-    path "${sample}_kneaddata_unmatched_{1,2}.fastq.gz"
+    val(sample), emit: sample
+    path("${sample}_kneaddata.fastq.gz"), emit: kneads
     path "${sample}_kneaddata*.fastq.gz" , optional:true , emit: others
     path "${sample}_kneaddata.log"                       , emit: log
 
@@ -22,11 +25,61 @@ process kneaddata {
     """
     echo $sample
 
-    kneaddata --input ${reads[0]} --input ${reads[1]} \
-              --reference-db $human_genome --output ./ \
-              --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
-              --trimmomatic /opt/conda/share/trimmomatic
-
-    gzip *.fastq
+    kneaddata --unpaired $reads \
+              --reference-db ${params.human_genome} --output ./ \
+              --processes ${task.cpus} --output-prefix ${sample}_kneaddata
+        
+    gzip kneaddata/${sample}_kneaddata*.fastq
     """  
+}
+
+process paired_end_kneaddata {
+    tag "kneaddata $sample"
+    publishDir "$params.outdir/kneaddata", mode: 'link', saveAs: { f ->
+      // filenames to exclude from publishing
+      def n = f.toString()
+      if ( n ==~ /.+_concatenated\.fastq\.gz/ ) return null
+      // publish everything else
+      return n
+    }
+    time { workflow.profile == 'standard' ? null : time * task.attempt }
+    memory { workflow.profile == 'standard' ? null : memory * task.attempt }
+
+    //errorStrategy 'retry'
+    //maxRetries 3
+
+    when:
+    params.paired_end == true
+
+    input:
+    tuple val(sample), path(reads)
+
+    output:
+    val(sample), emit: sample
+    path("${sample}_kneaddata_paired_1.fastq.gz"), emit: paired1
+    path("${sample}_kneaddata_paired_2.fastq.gz"), emit: paired2
+    path("${sample}_kneaddata_unmatched_1.fastq.gz"), emit: unpaired1
+    path("${sample}_kneaddata_unmatched_2.fastq.gz"), emit: unpaired2
+    path "${sample}_kneaddata.log"                       , emit: log
+    path "${sample}_concatenated.fastq.gz"                       , emit: kneads // available for chaining; not published
+
+    shell:
+    
+    """
+
+    echo $sample
+    echo $reads
+
+    kneaddata -i1 ${reads[0]} -i2 ${reads[1]} \
+              --reference-db ${params.human_genome} --output ./ \
+              --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
+              --trimmomatic ${params.trimmomatic_path}
+
+    gzip ${sample}_kneaddata*.fastq
+    
+    cat ${sample}_kneaddata_paired*.fastq.gz ${sample}_kneaddata_unmatched*.fastq.gz > ${sample}_concatenated.fastq.gz
+    """
+
+
+
 }

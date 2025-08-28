@@ -2,26 +2,39 @@
 
 nextflow.enable.dsl=2
 
-include { kneaddata } from './processes/kneaddata.nf'
-include { metaphlan; metaphlan_bzip } from './processes/metaphlan.nf'
-include { humann; humann_regroup; humann_rename } from './processes/humann.nf'
+include { single_end_kneaddata; paired_end_kneaddata } from "${projectDir}/processes/kneaddata.nf"
+include { metaphlan; metaphlan_bzip} from "${projectDir}/processes/metaphlan.nf"
+include { humann} from "${projectDir}/processes/humann.nf"
 
 
-workflow {
+
+    // main workflow
+    workflow {
+        
+        if (params.paired_end == true){
+            println "Running paired_end_workflow"
+            read_ch = Channel.fromFilePairs("${params.readsdir}/${params.filepattern}")
+            println "Running paired_end_workflow"
+            knead_out     =         paired_end_kneaddata(read_ch)
+            } 
+            
+        else if (params.paired_end == false){
+            println "Running single_end_workflow"
+            read_ch = Channel
+                .fromPath("${params.readsdir}/${params.filepattern}")
+                .map { file -> 
+                    def sample = file.baseName  // ERR3405856.fastq -> ERR3405856
+                    return tuple(sample, file)
+                }
+
+            knead_out     =         single_end_kneaddata(read_ch)
+
+            }
+            else {
+            throw new Exception("The paired_end must be bool true or false, got '${params.paired_end}'")
+            }
     
-    read_pairs_ch = Channel
-        .fromFilePairs("$params.readsdir/$params.filepattern", size: 2)
-
-    human_genome      = params.human_genome
-    metaphlan_db      = params.metaphlan_db
-    humann_bowtie_db  = params.humann_bowtie_db
-    humann_protein_db = params.humann_protein_db
-    humann_utility_db = params.humann_utility_db
-    
-    knead_out     = kneaddata(read_pairs_ch, human_genome)
-    metaphlan_out = metaphlan(knead_out[0], knead_out[1], metaphlan_db)
-    metaphlan_bzip = metaphlan_bzip(metaphlan_out[0], metaphlan_out[4])
-    humann_out    = humann(metaphlan_out[0], metaphlan_out[1], metaphlan_out[2], humann_bowtie_db, humann_protein_db)
-    regroup_out   = humann_regroup(humann_out[0], humann_out[1], humann_utility_db)
-    humann_rename(regroup_out, humann_utility_db)
-}
+    metaphlan_out =         metaphlan(knead_out.sample, knead_out.kneads)
+    metaphlan_bzip_out =    metaphlan_bzip(metaphlan_out.sample, metaphlan_out.sam)
+    humann_out =            humann(metaphlan_out.sample, knead_out.kneads, metaphlan_out.profile)
+    }
