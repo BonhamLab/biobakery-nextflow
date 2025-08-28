@@ -77,7 +77,7 @@ process paired_end_kneaddata {
 
     gzip ${sample}_kneaddata*.fastq
     
-    cat ${sample}_kneaddata*.fastq.gz > ${sample}_concatenated.fastq.gz
+    cat ${sample}_kneaddata_paired*.fastq.gz ${sample}_kneaddata_unmatched*.fastq.gz > ${sample}_concatenated.fastq.gz
     """
 
 
