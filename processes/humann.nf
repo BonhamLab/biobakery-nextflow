@@ -3,12 +3,12 @@
 process humann {
     // process samples with humann
     tag "humann on $sample"
-    publishDir "$params.outdir/humann/$params.humann_version", mode: 'copy'
+    publishDir "$params.outdir/humann/$params.humann_version", mode: 'link'
     memory { workflow.profile == 'standard' ? null : memory * task.attempt }
     cpus { workflow.profile == 'standard' ? null : cpus * task.attempt }
 
-    errorStrategy { task.exitStatus in 134..140 ? 'retry' : 'terminate' }
-    maxRetries 3
+    // errorStrategy { task.exitStatus in 134..140 ? 'retry' : 'terminate' }
+    // maxRetries 3
 
 
     input:
