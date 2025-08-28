@@ -3,7 +3,7 @@
 process humann {
     // process samples with humann
     tag "humann on $sample"
-    publishDir "$params.outdir/humann/$params.humann_version", mode: 'link'
+    publishDir "$params.outdir/humann/$params.humann_version", mode: 'copy'
     memory { workflow.profile == 'standard' ? null : memory * task.attempt }
     cpus { workflow.profile == 'standard' ? null : cpus * task.attempt }
 
@@ -32,5 +32,10 @@ process humann {
         --nucleotide-database ${params.humann_db}/chocophlan \
         --utility-database ${params.humann_db}/utility_mapping \
         --output-basename $sample 
+
+    mv "${sample}_2_genefamilies.tsv" "${sample}_2_genefamilies_${params.humann_version}.tsv" 
+    mv "${sample}_0.log" "${sample}_0_${params.humann_version}.log"
+    mv "${sample}_3_reactions.tsv" "${sample}_3_reactions_${params.humann_version}.tsv"
+    mv "${sample}_4_pathabundance.tsv" "${sample}_4_pathabundance_${params.humann_version}.tsv"
     """
 }
