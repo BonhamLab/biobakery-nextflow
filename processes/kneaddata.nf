@@ -27,7 +27,7 @@ process single_end_kneaddata {
 
     kneaddata --unpaired $reads \
               --reference-db ${params.human_genome} --output ./ \
-              --processes ${task.cpus} --output-prefix ${sample}_kneaddata
+              --threads ${task.cpus} --output-prefix ${sample}_kneaddata
         
     gzip kneaddata/${sample}_kneaddata*.fastq
     """  
