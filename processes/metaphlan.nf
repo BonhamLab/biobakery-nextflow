@@ -55,7 +55,7 @@ process metaphlan_bzip {
 
     script:
     """
-    bzip2 $sam
+    bzip2 -c -- "${sam}" > "${sample}_${params.metaphlan_index}.sam.bz2"
     """
 }
  
