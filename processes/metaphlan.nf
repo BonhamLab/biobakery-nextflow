@@ -1,7 +1,7 @@
 process metaphlan {
     tag "metaphlan on $sample"
-    publishDir "$params.outdir/metaphlan/$params.metaphlan_index", pattern: "*.tsv"
-    publishDir "$params.outdir/metaphlan/$params.metaphlan_index", pattern: "*.sam" 
+    publishDir "$params.outdir/metaphlan/$params.metaphlan_index", mode: 'copy', pattern: "*.tsv"
+    publishDir "$params.outdir/metaphlan/$params.metaphlan_index", mode: 'copy', pattern: "*.sam" 
     
     input:
     val(sample)
