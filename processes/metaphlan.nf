@@ -30,9 +30,9 @@ process metaphlan {
     
     // Run metaphlan on samples
     """
-    metaphlan $kneads -o ${sample}_profile.tsv \
-        --${out_arg} ${sample}_bowtie2.tsv \
-        --samout ${sample}.sam \
+    metaphlan $kneads -o ${sample}_profile_${params.metaphlan_index}.tsv \
+        --${out_arg} ${sample}_bowtie2_${params.metaphlan_index}.tsv \
+        --samout ${sample}_${params.metaphlan_index}.sam \
         --input_type fastq \
         --nproc ${task.cpus} \
         --${db_arg} ${params.metaphlan_db} \
