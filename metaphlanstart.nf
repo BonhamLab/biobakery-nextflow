@@ -5,8 +5,6 @@ nextflow.enable.dsl=2
 include { metaphlan; metaphlan_bzip } from './processes/metaphlan.nf'
 include { humann; humann_regroup; humann_rename } from './processes/humann.nf'
 
-params.filepattern = "*_kneaddata_paired_{1,2}.fastq.gz"
-
 workflow {
     
     read_pairs_ch = Channel

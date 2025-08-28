@@ -50,6 +50,10 @@ we can run the pipeline with the following Nextflow commands:
 nextflow run main.nf -profile local -params-file params.yaml`
 ```
 
+> [!Note]
+> To be able to run the pipeline, you must have at least 15 GB of available memory (RAM). This is needed to run the memory-intensive mapping step in metaphlan. Anecdotally, a laptop with 16 GB RAM was insufficient to run the pipeline.
+> Additionally, it has been notoriously challenging to download the metaphlan databases. It is recommended to run this pipeline on the Tufts HPC, where the environment and databases have already been established. 
+
 ### Running on the HPC
 
 Jobs on the Tufts HPC can be run in two different ways:
@@ -63,6 +67,8 @@ Jobs on the Tufts HPC can be run in two different ways:
 
 With how the HPC environment is currently defined in `nextflow.config`,
 jobs will first be submitted to the `batch` or `preempt` queue, whichever is available first.
+
+- Prior to scheduling the job, make sure to load nextflow `module load nextflow` and add bin to your path (`export PATH="/cluster/tufts/bonhamlab/shared/bin:$PATH"`)
 
 ```sh
 nextflow run main.nf -profile tufts_hpc -params-file params.yaml
@@ -80,6 +86,7 @@ but requires setting up and correctly configuring:
 - machine users with the correct permissions
 - S3 buckets with correct permissions
 - Containers with the correct versions of different software uploaded to ECR or docker-hub
+
 
 ```sh
 nextflow main.nf -profile amazon -params-file params.yaml`
@@ -102,13 +109,26 @@ Several databases must be installed to run this pipeline.
 ### MetaPhlAn
 
 - `mpa_vOct22_CHOCOPhlAnSGB_202403` is the most recent MetaPhlAn
-  database that is compatible with the versions of HUMAnN we are using.
+  database that is compatible with HUMAnN v4.
     - It can be found/downloaded manually from [here](http://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/).
       The easiest way to download is by running `metaphlan --install #any_other_args`
-- Note: there is a more up-to-date version (released in January 2025) that we will probably
-  eventually want to shift to once HUMAnN is able to support it.
+    - Note: there is a more up-to-date version (released in January 2025)
+      that we will probably eventually want to shift to once HUMAnN is able to support it.
+- `mpa_vOct22_CHOCOPhlAnSGB_202212` should be used if running HUMAnN v3.
+
+#### A couple of pain points/things to know when downloading the Metaphlan databases:
+
+- You cannot download multiple metaphlan databases to the same directory
+- Downloading the bowtie2 database may take a bit of time (~30-60 minutes). If anything disrupts the download, remove the partially-downloaded file and try again. Any partially downloaded files will confuse metaphlan.
+- MD5 files must be downloaded along with the bowtie databases in a single download. They should not be downloaded separately from the bowtie databases (which you may be tempted to do if your connection fails after downloading the bowtie databases), as the MD5 checksum must match the bowtie database checksum. 
+- Due to these issues, it is recommended to run the pipeline on the Tufts HPC (where database files have already been downloaded), rather than trying to re-download them locally.
 
 ### HUMAnN
+
+- Use the command `humann_databases --download` to download the database that you desire 
+    - for example: `humann_databases --download chocophlan full ~/biobakery_databases/chocophlan`
+    - Each humann software version has its own matching database. As long as you are using the correct software version to run `humann_database --download`, you will get a compatible database. 
+- All humann database can be found [here](http://cmprod1.cibio.unitn.it/databases/HUMAnN/).
 
 The `humann_databases` command should be used to interact with and download
 the databases used by the software.
@@ -175,21 +195,18 @@ The `template-params.yaml` file defines all input parameters that you may want t
 
 ### Overview of parameters in `template-params.yaml`
 
-- `input_data_type`: type of input data (either `fastq` or `bam`)
 - `paired_end`: True or False, given the type of input data
 - `filepattern`: regex describing sample naming convention (relative to the input data type)
+    - If there are paired-end reads, make sure the pattern considers both R1 and R2 the same sample.
 - `metaphlan_version`: MetaPhlAn software version (either `metaphlan_v3` or `metaphlan_v4`)
 - `humann_version`: HUMAnN3 software version (either `humann_v37` or `humann_v4a`)
 - `readsdir`: path to directory that contains raw data 
 - `outdir`: path to directory where processed results will be saved
 - `human_genome`: path to directory that contains human reference database used during Kneaddata 
+- `trimmomatic_path`: path to directory that contains Trimmomatic download
 - `metaphlan_db`: path to directory that contains metaphlan databases
 - `metaphlan_index`: database version (database must exist within `metaphlan_db`)
-- `humann_nucleotide_db`: path to directory containing chocophlan database
-- `humann_protein_db`: path to directory containing UniRef database
-- `humann_utility_db`: path to directory containing databases that have conversions
-  between different protein annotations (eg UniRef90 to KO or EC),
-  and names for all of the different annotations that have them
+- `humann_db`: path to directory containing humann databases
 
 ## Pipeline outputs
 
@@ -247,4 +264,6 @@ The general structure of outputs is
   These have been deprecated in favor of only saving primary outputs
   in long-term storage. 
   Regrouped and renamed files can be trivially created from primary outputs.
+
+
 
