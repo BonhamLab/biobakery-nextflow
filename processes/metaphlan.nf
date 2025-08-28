@@ -48,14 +48,14 @@ process metaphlan_bzip {
 
     input:
     val sample
-    path sam_rename
+    path sam
 
     output:
-    path ("${sam_rename}.bz2"),         emit: sam_rename_bzip
+    path ("${sam}.bz2"),         emit: sam_bzip
 
     script:
     """
-    bzip2 $sam_rename
+    bzip2 $sam
     """
 }
  
