@@ -19,10 +19,10 @@ process humann {
     output:
     val  sample                       , emit: sample
     path "${sample}_genefamilies_${params.humann_version}.tsv" , emit: genefamilies
-    path "${sample}_${params.humann_version}.log", optional           
+    path "${sample}_${params.humann_version}.log", optional:true           
     path "${sample}_reactions_${params.humann_version}.tsv"
     path "${sample}_pathabundance_${params.humann_version}.tsv"
-    path "${sample}_pathcoverage_${params.humann_version}.tsv", optional
+    path "${sample}_pathcoverage_${params.humann_version}.tsv", optional:true
 
     script:
 
@@ -34,13 +34,13 @@ process humann {
         --utility-database ${params.humann_db}/utility_mapping \
         --output-basename $sample 
 
-    if [["$params.humann_version" == 'humann_v4a']]; then 
+    if [[ "$params.humann_version" == 'humann_v4a' ]]; then 
         mv "${sample}_2_genefamilies.tsv" "${sample}_genefamilies_${params.humann_version}.tsv" 
         mv "${sample}_0.log" "${sample}_${params.humann_version}.log"
         mv "${sample}_3_reactions.tsv" "${sample}_reactions_${params.humann_version}.tsv"
         mv "${sample}_4_pathabundance.tsv" "${sample}_pathabundance_${params.humann_version}.tsv"
 
-    elif [["$params.humann_version" == 'humann_v37']]; then 
+    elif [[ "$params.humann_version" == 'humann_v37' ]]; then 
 
         mv "${sample}_genefamilies.tsv" "${sample}_genefamilies_${params.humann_version}.tsv" 
         mv "${sample}_pathabundance.tsv" "${sample}_pathabundance_${params.humann_version}.tsv"
