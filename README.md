@@ -71,7 +71,7 @@ jobs will first be submitted to the `batch` or `preempt` queue, whichever is ava
 - Prior to scheduling the job, make sure to load nextflow `module load nextflow` and add bin to your path (`export PATH="/cluster/tufts/bonhamlab/shared/bin:$PATH"`)
 
 ```sh
-nextflow run main.nf -profile tufts_hpc -params-file params.yaml
+nextflow run main.nf -profile tufts_hpc -params-file tuftshpc-params.yaml
 ```
 
 ### Running on AWS

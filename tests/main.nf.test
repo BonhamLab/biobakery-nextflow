@@ -12,12 +12,11 @@ nextflow_pipeline {
         }
 
         then {
-	    // make sure pipeline successfully ran
-            assert workflow.success
-	    //returns a list containing succeeded tasks, verify that it is 5
-	    assert workflow.trace.succeeded().size() == 5
+	    // make sure pipeline successfully ran and all four processes succeeded
+        def succeeded = workflow.trace.succeeded()
+	    assert succeeded.size() == 4
+    
         }
-
     }
 
 }

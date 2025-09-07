@@ -5,9 +5,6 @@ process single_end_kneaddata {
     time { workflow.profile == 'standard' ? null : time * task.attempt }
     memory { workflow.profile == 'standard' ? null : memory * task.attempt }
 
-    //errorStrategy 'retry'
-    //maxRetries 3
-
     when:
     params.paired_end == false
 
@@ -28,12 +25,13 @@ process single_end_kneaddata {
     kneaddata --unpaired $reads \
               --reference-db ${params.human_genome} --output ./ \
               --threads ${task.cpus} --output-prefix ${sample}_kneaddata
-        
+    
     gzip kneaddata/${sample}_kneaddata*.fastq
     """  
 }
 
 process paired_end_kneaddata {
+    // Run kneaddata on paired reads
     tag "kneaddata $sample"
     publishDir "$params.outdir/kneaddata", mode: 'link', saveAs: { f ->
       // filenames to exclude from publishing
@@ -44,9 +42,6 @@ process paired_end_kneaddata {
     }
     time { workflow.profile == 'standard' ? null : time * task.attempt }
     memory { workflow.profile == 'standard' ? null : memory * task.attempt }
-
-    //errorStrategy 'retry'
-    //maxRetries 3
 
     when:
     params.paired_end == true
@@ -77,6 +72,7 @@ process paired_end_kneaddata {
 
     gzip ${sample}_kneaddata*.fastq
     
+    # concatenate singleton/paired reads into a file to feed into metaphlan
     cat ${sample}_kneaddata_paired*.fastq.gz ${sample}_kneaddata_unmatched*.fastq.gz > ${sample}_concatenated.fastq.gz
     """
 
