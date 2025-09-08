@@ -3,7 +3,7 @@ nextflow_pipeline {
     name "Test Workflow main.nf"
     script "main.nf"
 
-    test("Should run without failures") {
+    test("Should run without failures and execute 4 processes") {
 
         when {
             params {
@@ -12,12 +12,39 @@ nextflow_pipeline {
         }
 
         then {
-	    // make sure pipeline successfully ran
-            assert workflow.success
-	    //returns a list containing succeeded tasks, verify that it is 5
-	    assert workflow.trace.succeeded().size() == 5
+	    // make sure pipeline successfully ran and all four processes succeeded
+        def succeeded = workflow.trace.succeeded()
+	    assert succeeded.size() == 4
+    
+        }
+    }
+
+        test("Should execute correct set of processes") {
+
+        when {
+            params {
+                load("tuftshpc-params.yaml")
+            }
         }
 
+        then {
+	    // make sure the set of processes matches what is expected for paired end reads
+        
+        def expected_paired_end_processes = ['paired_end_kneaddata','metaphlan','metaphlan_bzip','humann'] as Set
+    
+        println expected_paired_end_processes
+
+        def got_processes = (workflow.trace.succeeded()*.name as List)
+        .collect { it.replaceFirst(/ \(.+?\)$/, '') }           
+        .collect { it.contains(':') ? it.substring(it.lastIndexOf(':')+1) : it } 
+        .toSet()
+
+        println got_processes
+
+
+        assert got_processes ==  expected_paired_end_processes
+    
+        }
     }
 
 }

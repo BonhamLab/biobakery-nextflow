@@ -1,4 +1,5 @@
 process metaphlan {
+    // Species-level microbial profiling on the reads
     tag "metaphlan on $sample"
     publishDir "$params.outdir/metaphlan/$params.metaphlan_index", mode: 'copy', pattern: "*.tsv"
     publishDir "$params.outdir/metaphlan/$params.metaphlan_index", mode: 'copy', pattern: "*.sam" 
@@ -43,6 +44,7 @@ process metaphlan {
 
 
 process metaphlan_bzip {
+    // bzip the sam files
     tag "metaphlan_bzip on $sample"
     publishDir "$params.outdir/metaphlan/bzip"
 
