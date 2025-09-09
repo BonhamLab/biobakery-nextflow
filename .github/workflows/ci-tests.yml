@@ -24,7 +24,7 @@ jobs:
       - name: Install nf-test
         run: |
           wget -qO- https://get.nf-test.com | bash
-          sudo mv nf-test /usr/local/bin/
+          sudo mv nf-test /cluster/tufts/bonhamlab/shared/bin/
 
       - name: Run Tests
         run: nf-test test --ci
