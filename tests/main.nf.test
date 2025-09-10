@@ -8,7 +8,9 @@ nextflow_pipeline {
         when {
             // Load YAML params
       params {
-        load("$baseDir/template-params.yaml")
+        load("$baseDir/../template-params.yaml")
+        readsdir= "$baseDir/../test/rawfastq"
+        outdir= "$baseDir/../`test/results"
       }
       // Create trace for assertions + stub tools for CI
       args "-with-trace -stub-run"
