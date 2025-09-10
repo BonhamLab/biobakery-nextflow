@@ -7,7 +7,7 @@ nextflow_pipeline {
 
         when {
             params {
-                load("tuftshpc-params.yaml")
+                load("template-params.yaml")
             }
         }
 
