@@ -6,8 +6,8 @@ nextflow_pipeline {
     test("Should run without failures and execute 4 processes") {
 
         when {
-            params {
-                load("template-params.yaml")
+                paramsFile("template-params.yaml")
+                args "-with-trace -stub-run"
             }
         }
 
