@@ -8,7 +8,7 @@ nextflow_pipeline {
         when {
             // Load YAML params
       params {
-        load("$baseDir/../template-params.yaml")
+       // load("$baseDir/../template-params.yaml")
         readsdir= "$baseDir/../test/rawfastq"
         outdir= "$baseDir/../`test/results"
       }
