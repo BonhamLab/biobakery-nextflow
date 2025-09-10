@@ -21,15 +21,26 @@ humann_version : "humann_v4a"
 
 
 ### Computing environment
-# local params (will need to fill out yourself based on the location of files on your personal computer)
 
-readsdir: "/Users/pintorson/Documents/tufts_bonham/biobakery-nextflow/test/rawfastq"
-outdir: "/Users/pintorson/Documents/tufts_bonham/biobakery-nextflow/test/results"
+# testing params (params for CI testing on github servers)
+readsdir: "test/rawfastq"
+outdir: "test/results"
 human_genome: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/kneaddata"
 trimmomatic_path: "/Users/pintorson/miniconda3/envs/metaphlan_env/bin"
 metaphlan_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/metaphlan/vOct22_CHOCOPhlAnSGB_202403"
 metaphlan_index: "mpa_vOct22_CHOCOPhlAnSGB_202403"
 humann_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/humann"
+
+
+# local params (will need to fill out yourself based on the location of files on your personal computer)
+
+# readsdir: "/Users/pintorson/Documents/tufts_bonham/biobakery-nextflow/test/rawfastq"
+# outdir: "/Users/pintorson/Documents/tufts_bonham/biobakery-nextflow/test/results"
+# human_genome: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/kneaddata"
+# trimmomatic_path: "/Users/pintorson/miniconda3/envs/metaphlan_env/bin"
+# metaphlan_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/metaphlan/vOct22_CHOCOPhlAnSGB_202403"
+# metaphlan_index: "mpa_vOct22_CHOCOPhlAnSGB_202403"
+# humann_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/humann"
 
 
 

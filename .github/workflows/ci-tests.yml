@@ -1,3 +1,6 @@
+# this file allows us to set-up CI on Github actions
+# This was copied from https://www.nf-test.com/tutorials/github-actions/
+
 name: CI Tests
 
 on: [push, pull_request]
