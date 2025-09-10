@@ -23,8 +23,8 @@ humann_version : "humann_v4a"
 ### Computing environment
 
 # testing params (params for CI testing on github servers)
-readsdir: "test/rawfastq"
-outdir: "test/results"
+readsdir: "./test/rawfastq"
+outdir: "./test/results"
 human_genome: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/kneaddata"
 trimmomatic_path: "/Users/pintorson/miniconda3/envs/metaphlan_env/bin"
 metaphlan_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/metaphlan/vOct22_CHOCOPhlAnSGB_202403"
