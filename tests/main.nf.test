@@ -13,7 +13,7 @@ nextflow_pipeline {
         outdir= "$baseDir/../`test/results"
       }
       // Create trace for assertions + stub tools for CI
-      args "-with-trace -stub-run"
+     options "-with-trace -stub-run"
     }
 
         then {

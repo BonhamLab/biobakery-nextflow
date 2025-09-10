@@ -7,6 +7,10 @@ include { metaphlan; metaphlan_bzip} from "${projectDir}/processes/metaphlan.nf"
 include { humann} from "${projectDir}/processes/humann.nf"
 
 
+def resolve = { p -> def f=file(p); f.isAbsolute() ? f : file("${projectDir}/${p}") }
+def readsDir = resolve(params.readsdir)
+def outDir   = resolve(params.outdir)
+
 
     // main workflow
     workflow {
