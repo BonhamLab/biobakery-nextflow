@@ -11,8 +11,13 @@ include { humann} from "${projectDir}/processes/humann.nf"
     // main workflow
     workflow {
         // lets you pass either an absolute path (HPC) or a repo-relative path (for CI integration)
-        def resolve = { p -> def f=file(p); f.isAbsolute() ? f : file("${projectDir}/${p}") }
-        def readsDir = resolve(params.readsdir)
+        def resolve = { p ->
+        def f = file(p)
+        f.isAbsolute() ? f : file("${projectDir}/${p}")
+        }
+        def readsdir = resolve(params.readsdir)
+        def outdir   = resolve(params.outdir)
+
         
         // paired-end reads workflow
         if (params.paired_end == true){

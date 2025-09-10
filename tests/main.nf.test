@@ -6,9 +6,13 @@ nextflow_pipeline {
     test("Should run without failures and execute 4 processes") {
 
         when {
-                paramsFile "template-params.yaml"
-                args "-with-trace -stub-run"
-        }
+            // Load YAML params
+      params {
+        load("$baseDir/template-params.yaml")
+      }
+      // Create trace for assertions + stub tools for CI
+      args "-with-trace -stub-run"
+    }
 
         then {
 	    // make sure pipeline successfully ran and all four processes succeeded
