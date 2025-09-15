@@ -3,17 +3,13 @@ nextflow_pipeline {
     name "Test Workflow main.nf"
     script "main.nf"
 
-    test("Should run without failures and execute 4 processes") {
+    test("Run paired-end pipeline without failures and execute 4 processes") {
 
         when {
             // Load YAML params
       params {
-       // load("$baseDir/../template-params.yaml")
-        readsdir= "$baseDir/../test/rawfastq"
-        outdir= "$baseDir/../`test/results"
+       // load("tuftshpc-params.yaml")
       }
-      // Create trace for assertions + stub tools for CI
-     options "-with-trace -stub-run"
     }
 
         then {
@@ -24,7 +20,7 @@ nextflow_pipeline {
         }
     }
 
-        test("Should execute correct set of processes") {
+        test("Execute correct set of paired-end processes") {
 
         when {
             params {
@@ -48,6 +44,51 @@ nextflow_pipeline {
 
 
         assert got_processes ==  expected_paired_end_processes
+    
+        }
+    }
+
+    test("Run single-end pipeline without failures and execute 4 processes") {
+
+        when {
+            // Load YAML params
+      params {
+       // load("single-end-params.yaml")
+      }
+    }
+
+        then {
+	    // make sure pipeline successfully ran and all four processes succeeded
+        def succeeded = workflow.trace.succeeded()
+	    assert succeeded.size() == 4
+    
+        }
+    }
+
+        test("Execute correct set of single-end processes") {
+
+        when {
+            params {
+                load("single-end-params.yaml")
+            }
+        }
+
+        then {
+	    // make sure the set of processes matches what is expected for single end reads
+        
+        def expected_single_end_processes = ['single_end_kneaddata','metaphlan','metaphlan_bzip','humann'] as Set
+    
+        println expected_single_end_processes
+
+        def got_processes = (workflow.trace.succeeded()*.name as List)
+        .collect { it.replaceFirst(/ \(.+?\)$/, '') }           
+        .collect { it.contains(':') ? it.substring(it.lastIndexOf(':')+1) : it } 
+        .toSet()
+
+        println got_processes
+
+
+        assert got_processes ==  expected_single_end_processes
     
         }
     }
