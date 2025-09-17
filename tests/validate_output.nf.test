@@ -1,0 +1,55 @@
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.Files
+import java.util.stream.Collectors
+
+nextflow_pipeline {
+
+    name "Test Workflow main.nf"
+    script "main.nf"
+
+test("Validate correct artifacts were created for paired-end pipeline") {
+        when {
+      params {
+       load("tuftshpc-params.yaml")
+      }
+    }
+        then {
+	    // make sure correct Kneaddata files were created
+        def outDir = Paths.get("test/output/kneaddata").toAbsolutePath().normalize()
+        // Expected kneaddata output 
+        def expected = [
+        "FG00004_S26_kneaddata.log",
+        "FG00004_S26_kneaddata_unmatched_1.fastq.gz",
+        "FG00004_S26_kneaddata_paired_1.fastq.gz",
+        "FG00004_S26_kneaddata_unmatched_2.fastq.gz",
+        "FG00004_S26_kneaddata_paired_2.fastq.gz"]
+
+        // Check existence + non-empty
+        def missing = []
+        def empty   = []
+        expected.each { rel ->
+            def p = outDir.resolve(rel)
+            if (!Files.exists(p)) missing << rel
+            else if (Files.size(p) == 0) empty << rel
+        }
+
+        assert missing.isEmpty() : "Missing outputs in ${outDir}: ${missing}"
+        assert empty.isEmpty()   : "Empty outputs in ${outDir}:   ${empty}"
+
+        // Ensure nothing extra was written
+        def actual = Files.list(outDir)
+        .filter { Files.isRegularFile(it) }
+        .map    { it.fileName.toString() }
+        .collect(Collectors.toList())
+
+        assert actual.containsAll(expected) : "Unexpected outputs: ${actual - expected}"
+
+        // make sure correct Metaphlan files were created
+
+        // make sure correct Humann files were created
+
+    
+        }
+    }
+}
