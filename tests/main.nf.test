@@ -45,7 +45,7 @@ nextflow_pipeline {
     
         }
     }
-}
+
 
 
     
@@ -97,5 +97,6 @@ nextflow_pipeline {
     
         }
     }
-
 }
+
+
