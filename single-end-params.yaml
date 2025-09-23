@@ -1,9 +1,9 @@
 ### Data type
 
 # paired end data
-paired_end: true
+paired_end: false
 
-filepattern: "*_R{1,2}.fastq.gz" 
+filepattern: "*.fastq.gz" 
 # filepattern: "*.fastq.gz" 
 
 
@@ -21,8 +21,9 @@ humann_version : "humann_v4a"
 
 
 ### Computing environment
-readsdir: "/cluster/tufts/bonhamlab/dpinto02/biobakery-nextflow/test/rawfastq"
-outdir: "/cluster/tufts/bonhamlab/dpinto02/biobakery-nextflow/test/output"
+# tufts hpc params for single-end reads
+readsdir: "/cluster/tufts/bonhamlab/dpinto02/biobakery-nextflow/test/single_end_rawfastq"
+outdir: "/cluster/tufts/bonhamlab/dpinto02/biobakery-nextflow/test/single_end_rawfastq/output"
 human_genome: "/cluster/tufts/bonhamlab/shared/databases/biobakery/kneaddata"
 trimmomatic_path: "/cluster/tufts/bonhamlab/shared/conda-envs/metaphlan_v4.2/.CondaPkg/.pixi/envs/default/share/trimmomatic-0.39-2"
 metaphlan_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/metaphlan"
