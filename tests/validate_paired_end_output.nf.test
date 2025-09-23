@@ -1,0 +1,77 @@
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.Files
+import java.util.stream.Collectors
+
+// ---------- Reusable helper (closure), OUTSIDE the test blocks ----------
+def verify_outputs = { Path outDir, List<String> expectedFiles, boolean strict = false ->
+  outDir = outDir.toAbsolutePath().normalize()
+  assert Files.exists(outDir) : "Output dir not found: ${outDir}"
+
+  def missing = []
+  def empty   = []
+
+  expectedFiles.each { rel ->
+    Path p = outDir.resolve(rel)
+    if (!Files.exists(p))            missing << rel
+    else if (Files.isRegularFile(p) && Files.size(p) == 0L) empty << rel
+  }
+
+  assert missing.isEmpty() : "Missing outputs in ${outDir}: ${missing}"
+  assert empty.isEmpty()   : "Empty outputs in ${outDir}:   ${empty}"
+
+  if (strict) {
+    def actual = Files.list(outDir)
+      .filter { Files.isRegularFile(it) }
+      .map    { it.fileName.toString() }
+      .collect(Collectors.toList())
+    def extra = (actual as Set) - (expectedFiles as Set)
+    assert extra.isEmpty() : "Unexpected extra outputs in ${outDir}: ${extra}"
+  }
+}
+// -----------------------------------------------------------------------
+
+nextflow_pipeline {
+  name "Test Workflow output main.nf"
+  script "main.nf"
+
+  test("Validate correct artifacts were created for paired-end pipeline") {
+    when {
+      // Use a CI/test params file or inline params that point to test data.
+      // Avoid loading HPC params here unless your pipeline resolves repo-relative paths.
+      params { load("tuftshpc-params.yaml") }
+      // options "-with-trace -stub-run"  // enable if you use stub{} to create files
+    }
+    then {
+      // --- Kneaddata ---
+      def kneaddata_outDir = Paths.get("${baseDir}/test/output/kneaddata")
+      def kneaddata_expected = [
+        "FG00004_S26_kneaddata.log",
+        "FG00004_S26_kneaddata_unmatched_1.fastq.gz",
+        "FG00004_S26_kneaddata_paired_1.fastq.gz",
+        "FG00004_S26_kneaddata_unmatched_2.fastq.gz",
+        "FG00004_S26_kneaddata_paired_2.fastq.gz"
+      ]
+      verify_outputs(kneaddata_outDir, kneaddata_expected, /*strict=*/true)
+
+      // --- MetaPhlAn ---
+      def metaphlan_outDir = Paths.get("${baseDir}/test/output/metaphlan/mpa_vOct22_CHOCOPhlAnSGB_202403")
+      def metaphlan_expected = [
+        "FG00004_S26_bowtie2_mpa_vOct22_CHOCOPhlAnSGB_202403.tsv",
+        "FG00004_S26_mpa_vOct22_CHOCOPhlAnSGB_202403.sam",
+        "FG00004_S26_profile_mpa_vOct22_CHOCOPhlAnSGB_202403.tsv"
+      ]
+      verify_outputs(metaphlan_outDir, metaphlan_expected, true)
+
+      // --- HUMAnN ---
+      def humann_outDir = Paths.get("${baseDir}/test/output/humann/humann_v4a")
+      def humann_expected = [
+        "FG00004_S26_genefamilies_humann_v4a.tsv",
+        "FG00004_S26_pathabundance_humann_v4a.tsv",
+        "FG00004_S26_humann_v4a.log",
+        "FG00004_S26_reactions_humann_v4a.tsv"
+      ]
+      verify_outputs(humann_outDir, humann_expected, true)
+    }
+  }
+}
