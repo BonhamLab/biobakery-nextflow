@@ -3,7 +3,11 @@
 # paired end data
 paired_end: true
 
+<<<<<<< HEAD
 filepattern: "*_R{1,2}.fastq.gz" 
+=======
+filepattern: "*_R{1,2}*.fastq.gz" 
+>>>>>>> eb756bff84d6fa7a4e56b3443c948309ced28569
 # filepattern: "*.fastq.gz" 
 
 

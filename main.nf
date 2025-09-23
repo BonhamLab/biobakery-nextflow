@@ -28,7 +28,11 @@ def outDir   = resolve(params.outdir)
             read_ch = Channel
                 .fromPath("${params.readsdir}/${params.filepattern}", checkIfExists: true)
                 .map { file -> 
+<<<<<<< HEAD
                     def sample = file.baseName.replaceFirst(/(\.fastq|\.fq)$/, '')  // ERR3405856.fastq -> ERR3405856
+=======
+                    def sample = file.baseName  // ERR3405856.fastq -> ERR3405856
+>>>>>>> eb756bff84d6fa7a4e56b3443c948309ced28569
                     return tuple(sample, file)
                 }
 
