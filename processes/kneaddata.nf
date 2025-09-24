@@ -24,9 +24,10 @@ process single_end_kneaddata {
 
     kneaddata --unpaired $reads \
               --reference-db ${params.human_genome} --output ./ \
-              --threads ${task.cpus} --output-prefix ${sample}_kneaddata
-    
-    gzip kneaddata/${sample}_kneaddata*.fastq
+              --threads ${task.cpus} --output-prefix ${sample}_kneaddata \
+              --trimmomatic ${params.trimmomatic_path}
+        
+    gzip ${sample}_kneaddata*.fastq
     """  
 }
 
