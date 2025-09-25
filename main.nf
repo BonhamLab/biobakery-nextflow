@@ -14,7 +14,6 @@ include { humann} from "${projectDir}/processes/humann.nf"
         if (params.paired_end == true){
             println "Running paired_end_workflow"
             read_ch = Channel.fromFilePairs("${params.readsdir}/${params.filepattern}", checkIfExists: true)
-            println "Running paired_end_workflow"
             knead_out     =         paired_end_kneaddata(read_ch)
             } 
             
@@ -34,6 +33,8 @@ include { humann} from "${projectDir}/processes/humann.nf"
             throw new Exception("The paired_end must be bool true or false, got '${params.paired_end}'")
             }
     
+
+    // all read types are processed with metaphlan/humann processes
     metaphlan_out =         metaphlan(knead_out.sample, knead_out.kneads)
     metaphlan_bzip_out =    metaphlan_bzip(metaphlan_out.sample, metaphlan_out.sam)
     humann_out =            humann(metaphlan_out.sample, knead_out.kneads, metaphlan_out.profile)
