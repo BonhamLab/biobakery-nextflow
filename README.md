@@ -270,7 +270,7 @@ The general structure of outputs is
 
   Test have been written using [`NF-test`](https://www.nf-test.com/) to test the end-to-end pipeline, as well as the outputs. To run the tests on the HPC cluster, you can run:
   - `nf-test test tests/main.nf.test --profile tufts_hpc`
-  - `nf-test test tests/validate_paired_end_output.nf.test --profile tufts_hpc`
+  - `nf-test test tests/validate_output.nf.test --profile tufts_hpc`
   
   
    CI has also been set up on Github to ensure that new changes to the pipeline are tested automatically. 
