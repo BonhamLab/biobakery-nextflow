@@ -63,10 +63,10 @@ nextflow_pipeline {
       // --- HUMAnN ---
       def single_end_humann_outDir = Paths.get("${baseDir}/test/single_end_rawfastq/output/humann/humann_v4a")
       def single_end_humann_expected = [
-        "FG00004_S26_R1_0_humann_v4a.log",
-        "FG00004_S26_R1_3_reactions_humann_v4a.tsv",  
-        "FG00004_S26_R1_2_genefamilies_humann_v4a.tsv",  
-        "FG00004_S26_R1_4_pathabundance_humann_v4a.tsv"
+        "FG00004_S26_R1_humann_v4a.log",
+        "FG00004_S26_R1_reactions_humann_v4a.tsv",  
+        "FG00004_S26_R1_genefamilies_humann_v4a.tsv",  
+        "FG00004_S26_R1_pathabundance_humann_v4a.tsv"
       ]
       verify_outputs(single_end_humann_outDir, single_end_humann_expected, true)
     }
@@ -100,10 +100,10 @@ nextflow_pipeline {
       // --- HUMAnN ---
       def paired_end_humann_outDir = Paths.get("${baseDir}/test/output/humann/humann_v4a")
       def paired_end_humann_expected = [
-        "FG00004_S26_0_humann_v4a.log",  
-        "FG00004_S26_2_genefamilies_humann_v4a.tsv",  
-        "FG00004_S26_3_reactions_humann_v4a.tsv",  
-        "FG00004_S26_4_pathabundance_humann_v4a.tsv"
+        "FG00004_S26_humann_v4a.log",  
+        "FG00004_S26_genefamilies_humann_v4a.tsv",  
+        "FG00004_S26_reactions_humann_v4a.tsv",  
+        "FG00004_S26_pathabundance_humann_v4a.tsv"
       ]
       verify_outputs(paired_end_humann_outDir, paired_end_humann_expected, true)
     }
