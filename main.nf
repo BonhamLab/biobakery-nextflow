@@ -24,7 +24,7 @@ include { humann} from "${projectDir}/processes/humann.nf"
             read_ch = Channel
                 .fromPath("${params.readsdir}/${params.filepattern}", checkIfExists: true)
                 .map { file -> 
-                    def sample = file.baseName  // ERR3405856.fastq -> ERR3405856
+                    def sample = file.baseName.replaceFirst(/(\.fastq|\.fq)$/, '')  // ERR3405856.fastq -> ERR3405856
                     return tuple(sample, file)
                 }
 
