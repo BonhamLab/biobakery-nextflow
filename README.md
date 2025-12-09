@@ -47,7 +47,7 @@ we can run the pipeline with the following Nextflow commands:
 ### Running locally
 
 ```sh
-nextflow run main.nf -profile local -params-file params.yaml`
+nextflow run main.nf -profile standard -params-file params.yaml`
 ```
 
 > [!Note]
