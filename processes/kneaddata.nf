@@ -24,9 +24,8 @@ process single_end_kneaddata {
 
     kneaddata --unpaired $reads \
               --reference-db ${params.human_genome} --output ./ \
-              --threads ${task.cpus} --output-prefix ${sample}_kneaddata \
-              --trimmomatic ${params.trimmomatic_path}
-        
+              --threads ${task.cpus} --output-prefix ${sample}_kneaddata
+
     gzip ${sample}_kneaddata*.fastq
     """  
 }
@@ -68,8 +67,7 @@ process paired_end_kneaddata {
 
     kneaddata -i1 ${reads[0]} -i2 ${reads[1]} \
               --reference-db ${params.human_genome} --output ./ \
-              --processes ${task.cpus} --output-prefix ${sample}_kneaddata \
-              --trimmomatic ${params.trimmomatic_path}
+              --processes ${task.cpus} --output-prefix ${sample}_kneaddata
 
     gzip ${sample}_kneaddata*.fastq
     

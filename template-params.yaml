@@ -6,8 +6,6 @@ paired_end: true
 filepattern: "*_R{1,2}*.fastq.gz" 
 # filepattern: "*.fastq.gz" 
 
-
-
 ### Metaphlan version
 # metaphlan3.1.0 params
 # metaphlan_version : "metaphlan_v3"
@@ -19,17 +17,15 @@ metaphlan_version : "metaphlan_v4"
 # humann4alpha params
 humann_version : "humann_v4a"
 
-
 ### Computing environment
 
 # testing params (params for CI testing on github servers)
 readsdir: "test/rawfastq"
 outdir: "test/results"
-human_genome: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/kneaddata"
-trimmomatic_path: "/Users/pintorson/miniconda3/envs/metaphlan_env/bin"
-metaphlan_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/metaphlan/vOct22_CHOCOPhlAnSGB_202403"
+human_genome: "/volume/biobakery_databases/kneaddata"
+metaphlan_db: "/volume/biobakery_databases/metaphlan/vOct22_CHOCOPhlAnSGB_202403"
 metaphlan_index: "mpa_vOct22_CHOCOPhlAnSGB_202403"
-humann_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/humann"
+humann_db: "/volume/biobakery_databases/humann"
 
 
 # local params (will need to fill out yourself based on the location of files on your personal computer)
@@ -37,7 +33,6 @@ humann_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/humann"
 # readsdir: "/Users/pintorson/Documents/tufts_bonham/biobakery-nextflow/test/rawfastq"
 # outdir: "/Users/pintorson/Documents/tufts_bonham/biobakery-nextflow/test/results"
 # human_genome: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/kneaddata"
-# trimmomatic_path: "/Users/pintorson/miniconda3/envs/metaphlan_env/bin"
 # metaphlan_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/metaphlan/vOct22_CHOCOPhlAnSGB_202403"
 # metaphlan_index: "mpa_vOct22_CHOCOPhlAnSGB_202403"
 # humann_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/humann"
@@ -48,7 +43,6 @@ humann_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/humann"
 # readsdir: "cshared/sequencing/bam"
 # outdir: "/cluster/tufts/bonhamlab/shared/sequencing/processed"
 # human_genome: "/cluster/tufts/bonhamlab/shared/databases/biobakery/kneaddata"
-# trimmomatic_path: "/cluster/tufts/bonhamlab/shared/conda-envs/metaphlan_v4.2/.CondaPkg/.pixi/envs/default/share/trimmomatic-0.39-2"
 # metaphlan_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/metaphlan"
 # metaphlan_index: "mpa_vOct22_CHOCOPhlAnSGB_202403"
 # humann_db: "/cluster/tufts/bonhamlab/shared/databases/biobakery/humann/chocophlan"
@@ -58,8 +52,7 @@ humann_db: "/Users/pintorson/Documents/tufts_bonham/biobakery_databases/humann"
 # readsdir: "s3://vkc-nextflow/rawfastq/"
 # outdir: "s3://vkc-nextflow/output/"
 # human_genome: "s3://biobakery-databases/kneaddata_databases/"
-# trimmomatic_path: 
 # metaphlan_db: "s3://biobakery-databases/metaphlan_databases/"
-# metaphlan_index:
+# metaphlan_index: "mpa_vOct22_CHOCOPhlAnSGB_202403"
 # humann_db: "s3://biobakery-databases/humann_databases/chocophlan"
 
